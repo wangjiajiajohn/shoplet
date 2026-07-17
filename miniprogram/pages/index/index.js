@@ -44,6 +44,21 @@ Page({
     this.setData({ activeCat: e.currentTarget.dataset.cat });
   },
 
+  openMap() {
+    const { location, locationSub, latitude, longitude } = this.data.info;
+    if (!latitude || !longitude) {
+      wx.showToast({ title: '暂无定位信息', icon: 'none' });
+      return;
+    }
+    wx.openLocation({
+      latitude,
+      longitude,
+      name: '有点晚拌川',
+      address: location + (locationSub ? ' · ' + locationSub : ''),
+      scale: 16
+    });
+  },
+
   goAdmin() {
     wx.navigateTo({ url: '/pages/admin/admin' });
   }

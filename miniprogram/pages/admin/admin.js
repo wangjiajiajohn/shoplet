@@ -23,10 +23,12 @@ Page({
   },
 
   setLoc(e) {
-    const { loc, sub } = e.currentTarget.dataset;
+    const { loc, sub, lat, lng } = e.currentTarget.dataset;
     this.setData({
       'form.location': loc,
-      'form.locationSub': sub
+      'form.locationSub': sub,
+      'form.latitude': parseFloat(lat),
+      'form.longitude': parseFloat(lng)
     });
   },
 

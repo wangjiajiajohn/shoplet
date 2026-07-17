@@ -1,12 +1,13 @@
 App({
   globalData: {
-    // 出摊信息默认值，实际数据存在本地缓存里（后续可换成云开发/服务器接口）
     stallInfo: {
       isOn: true,
-      location: '文一西路口',
-      locationSub: '近电子科技大楼',
-      time: '17:30 – 21:00',
-      timeSub: '卖完即收摊',
+      location: '杭州采荷中学南门',
+      locationSub: '',
+      latitude: 30.253,
+      longitude: 120.199,
+      time: '22:30 – 02:00',
+      timeSub: '深夜档 · 卖完即收',
       note: ''
     }
   },

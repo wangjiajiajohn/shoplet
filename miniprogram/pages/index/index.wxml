@@ -32,11 +32,12 @@
 
   <!-- 地点 / 时间 -->
   <view class="info-grid">
-    <view class="info-item">
+    <view class="info-item info-loc" bindtap="openMap">
       <text class="info-icon">📍</text>
       <text class="info-k">地点</text>
       <text class="info-v">{{info.location}}</text>
       <text class="info-sub">{{info.locationSub}}</text>
+      <text class="info-arrow">›</text>
     </view>
     <view class="info-item">
       <text class="info-icon">🕔</text>

@@ -22,9 +22,9 @@
       <text>{{form.location}} · {{form.locationSub}}</text>
     </view>
     <view class="preset-row">
-      <view class="preset {{form.location === '文一西路口' ? 'sel' : ''}}" data-loc="文一西路口" data-sub="近电子科技大楼" bindtap="setLoc">文一西路口</view>
-      <view class="preset {{form.location === '古翠路夜市' ? 'sel' : ''}}" data-loc="古翠路夜市" data-sub="3号灯柱旁" bindtap="setLoc">古翠路夜市</view>
-      <view class="preset {{form.location === '留下老街口' ? 'sel' : ''}}" data-loc="留下老街口" data-sub="" bindtap="setLoc">留下老街口</view>
+      <view class="preset {{form.location === '文一西路口' ? 'sel' : ''}}" data-loc="文一西路口" data-sub="近电子科技大楼" data-lat="30.302" data-lng="120.098" bindtap="setLoc">文一西路口</view>
+      <view class="preset {{form.location === '古翠路夜市' ? 'sel' : ''}}" data-loc="古翠路夜市" data-sub="3号灯柱旁" data-lat="30.298" data-lng="120.085" bindtap="setLoc">古翠路夜市</view>
+      <view class="preset {{form.location === '留下老街口' ? 'sel' : ''}}" data-loc="留下老街口" data-sub="" data-lat="30.258" data-lng="120.048" bindtap="setLoc">留下老街口</view>
     </view>
   </view>
 
