@@ -8,6 +8,7 @@ Page({
     navBarHeight: 0,
     rightSafe: 0,
     reminderSet: false,
+    tapCount: 0,
 
     // 拌川菜单 —— 实际使用时把 emoji 换成 image 组件 + 真实图片即可
     menuBanchuan: [
@@ -36,7 +37,7 @@ Page({
     const sysInfo = wx.getSystemInfoSync();
     const navBarHeight = sysInfo.statusBarHeight + 48;
     const menuBtn = sysInfo.menuButtonBoundingClientRect;
-    const rightSafe = menuBtn ? (sysInfo.windowWidth - menuBtn.left + 16) : 28;
+    const rightSafe = menuBtn ? (sysInfo.windowWidth - menuBtn.right + 32) : 28;
     this.setData({ 
       statusBarHeight: sysInfo.statusBarHeight, 
       navBarHeight,
@@ -136,6 +137,25 @@ Page({
         }
       }
     });
+  },
+
+  onTitleTap() {
+    const count = this.data.tapCount + 1;
+    this.setData({ tapCount: count });
+    
+    if (this.tapTimer) {
+      clearTimeout(this.tapTimer);
+    }
+    
+    if (count >= 5) {
+      this.setData({ tapCount: 0 });
+      wx.navigateTo({ url: '/pages/admin/admin' });
+      return;
+    }
+    
+    this.tapTimer = setTimeout(() => {
+      this.setData({ tapCount: 0 });
+    }, 3000);
   },
 
   goAdmin() {

@@ -5,11 +5,8 @@
   <view class="blob blob-3"></view>
 
   <!-- 玻璃导航栏 -->
-  <view class="nav-bar" style="padding-top:{{statusBarHeight}}px; padding-right:{{rightSafe}}px">
-    <text class="nav-title">有点晚拌川</text>
-    <view class="nav-gear" bindtap="goAdmin">
-      <text>⚙</text>
-    </view>
+  <view class="nav-bar" style="padding-top:{{statusBarHeight}}px">
+    <text class="nav-title" bindtap="onTitleTap">有点晚拌川</text>
   </view>
 
   <!-- 消息滚动栏占位 -->
