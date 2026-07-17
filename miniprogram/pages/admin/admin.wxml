@@ -1,0 +1,52 @@
+<view class="page">
+
+  <view class="blob blob-1"></view>
+  <view class="blob blob-2"></view>
+
+  <text class="panel-title">今日出摊设置</text>
+  <text class="panel-sub">改完点保存，顾客端立即更新</text>
+
+  <!-- 营业状态 -->
+  <view class="field">
+    <text class="field-label">营业状态</text>
+    <view class="toggle-row">
+      <view class="toggle-opt {{form.isOn ? 'on' : ''}}" bindtap="setStatus" data-on="{{true}}">营业中</view>
+      <view class="toggle-opt {{!form.isOn ? 'off' : ''}}" bindtap="setStatus" data-on="{{false}}">今日休息</view>
+    </view>
+  </view>
+
+  <!-- 出摊地点 -->
+  <view class="field">
+    <text class="field-label">出摊地点</text>
+    <view class="input-fake">
+      <text>{{form.location}} · {{form.locationSub}}</text>
+    </view>
+    <view class="preset-row">
+      <view class="preset {{form.location === '文一西路口' ? 'sel' : ''}}" data-loc="文一西路口" data-sub="近电子科技大楼" bindtap="setLoc">文一西路口</view>
+      <view class="preset {{form.location === '古翠路夜市' ? 'sel' : ''}}" data-loc="古翠路夜市" data-sub="3号灯柱旁" bindtap="setLoc">古翠路夜市</view>
+      <view class="preset {{form.location === '留下老街口' ? 'sel' : ''}}" data-loc="留下老街口" data-sub="" bindtap="setLoc">留下老街口</view>
+    </view>
+  </view>
+
+  <!-- 出摊时间 -->
+  <view class="field">
+    <text class="field-label">出摊时间</text>
+    <view class="input-fake">
+      <text>{{form.time}}</text>
+    </view>
+    <view class="preset-row">
+      <view class="preset {{form.time === '17:30 – 21:00' ? 'sel' : ''}}" data-time="17:30 – 21:00" bindtap="setTime">17:30–21:00</view>
+      <view class="preset {{form.time === '11:00 – 13:30' ? 'sel' : ''}}" data-time="11:00 – 13:30" bindtap="setTime">午市</view>
+      <view class="preset {{form.time === '18:00 – 22:00' ? 'sel' : ''}}" data-time="18:00 – 22:00" bindtap="setTime">晚市加长</view>
+    </view>
+  </view>
+
+  <!-- 留言 -->
+  <view class="field">
+    <text class="field-label">今日留言（选填）</text>
+    <input class="input-real" placeholder="例如：今天多进了牛肉，先到先得" value="{{form.note}}" bindinput="onNoteInput" />
+  </view>
+
+  <button class="save-btn" bindtap="saveInfo">保存并发布给顾客</button>
+
+</view>

@@ -1,0 +1,22 @@
+{
+  "description": "有点晚拌川 - 出摊小程序",
+  "miniprogramRoot": "miniprogram/",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true,
+    "newFeature": true,
+    "bigPackageSizeSupport": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "trial",
+  "appid": "touristappid",
+  "projectname": "youdianwan-banchuan",
+  "condition": {}
+}

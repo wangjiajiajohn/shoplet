@@ -1,0 +1,119 @@
+<view class="page" style="padding-top:{{navBarHeight + 20}}px">
+
+  <view class="blob blob-1"></view>
+  <view class="blob blob-2"></view>
+  <view class="blob blob-3"></view>
+
+  <!-- 玻璃导航栏 -->
+  <view class="nav-bar" style="padding-top:{{statusBarHeight}}px">
+    <text class="nav-title">有点晚拌川</text>
+    <view class="nav-gear" bindtap="goAdmin">
+      <text>⚙</text>
+    </view>
+  </view>
+
+  <!-- 出摊状态卡 -->
+  <view class="status-card">
+    <view class="status-top">
+      <text class="status-label">今日出摊状态</text>
+      <view class="seal {{info.isOn ? '' : 'rest'}}">
+        <text>{{info.isOn ? '营业中' : '今日休'}}</text>
+      </view>
+    </view>
+    <view class="status-headline">
+      <view class="dot {{info.isOn ? '' : 'rest'}}"></view>
+      <text class="headline-text">{{info.isOn ? '正在出摊' : '今日不出摊'}}</text>
+    </view>
+    <text class="status-desc">
+      {{info.isOn ? '老板已经支好摊子，铁锅正热着 —— 现在过去，拌川管够。' : '老板临时有事，今天先不出摊了，明天照常见～'}}
+    </text>
+    <text wx:if="{{info.note}}" class="status-note">💬 {{info.note}}</text>
+  </view>
+
+  <!-- 地点 / 时间 -->
+  <view class="info-grid">
+    <view class="info-item">
+      <text class="info-icon">📍</text>
+      <text class="info-k">地点</text>
+      <text class="info-v">{{info.location}}</text>
+      <text class="info-sub">{{info.locationSub}}</text>
+    </view>
+    <view class="info-item">
+      <text class="info-icon">🕔</text>
+      <text class="info-k">时间</text>
+      <text class="info-v">{{info.time}}</text>
+      <text class="info-sub">{{info.timeSub}}</text>
+    </view>
+  </view>
+
+  <!-- 分类切换 -->
+  <view class="cat-switch" style="top:{{navBarHeight}}px">
+    <view class="cat-btn {{activeCat === 'banchuan' ? 'active' : ''}}" data-cat="banchuan" bindtap="switchCat">拌川</view>
+    <view class="cat-btn {{activeCat === 'topping' ? 'active' : ''}}" data-cat="topping" bindtap="switchCat">浇头</view>
+    <view class="cat-btn {{activeCat === 'drink' ? 'active' : ''}}" data-cat="drink" bindtap="switchCat">饮品</view>
+  </view>
+
+  <!-- 拌川列表 -->
+  <view class="menu-group" wx:if="{{activeCat === 'banchuan'}}">
+    <view class="menu-item" wx:for="{{menuBanchuan}}" wx:key="name">
+      <view class="menu-thumb" style="background:{{item.bg}}">
+        <image wx:if="{{item.image}}" class="menu-thumb-img" src="{{item.image}}" mode="aspectFill" />
+        <text wx:else class="menu-thumb-emoji">{{item.emoji}}</text>
+        <text wx:if="{{item.hot}}" class="hot-tag">招牌</text>
+      </view>
+      <view class="menu-content">
+        <view class="menu-body">
+          <text class="menu-name">{{item.name}}</text>
+          <text class="menu-desc">{{item.desc}}</text>
+        </view>
+        <view class="menu-price-box">
+          <text class="menu-price">{{item.price}}</text>
+          <text wx:if="{{item.priceSuffix}}" class="menu-price-sub">{{item.priceSuffix}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 浇头列表 -->
+  <view class="menu-group" wx:if="{{activeCat === 'topping'}}">
+    <view class="menu-item" wx:for="{{menuTopping}}" wx:key="name">
+      <view class="menu-thumb" style="background:{{item.bg}}">
+        <image wx:if="{{item.image}}" class="menu-thumb-img" src="{{item.image}}" mode="aspectFill" />
+        <text wx:else class="menu-thumb-emoji">{{item.emoji}}</text>
+        <text wx:if="{{item.hot}}" class="hot-tag">招牌</text>
+      </view>
+      <view class="menu-content">
+        <view class="menu-body">
+          <text class="menu-name">{{item.name}}</text>
+          <text class="menu-desc">{{item.desc}}</text>
+        </view>
+        <view class="menu-price-box">
+          <text class="menu-price">{{item.price}}</text>
+          <text wx:if="{{item.priceSuffix}}" class="menu-price-sub">{{item.priceSuffix}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 饮品列表 -->
+  <view class="menu-group" wx:if="{{activeCat === 'drink'}}">
+    <view class="menu-item" wx:for="{{menuDrink}}" wx:key="name">
+      <view class="menu-thumb" style="background:{{item.bg}}">
+        <image wx:if="{{item.image}}" class="menu-thumb-img" src="{{item.image}}" mode="aspectFill" />
+        <text wx:else class="menu-thumb-emoji">{{item.emoji}}</text>
+      </view>
+      <view class="menu-content">
+        <view class="menu-body">
+          <text class="menu-name">{{item.name}}</text>
+          <text class="menu-desc">{{item.desc}}</text>
+        </view>
+        <view class="menu-price-box">
+          <text class="menu-price">{{item.price}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <text class="footer-note">灶火不熄 · 明天再见</text>
+
+</view>

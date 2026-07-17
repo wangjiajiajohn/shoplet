@@ -1,0 +1,33 @@
+/*
+  液态玻璃（Liquid Glass）配色 v2 —— 更浅、更透、对比更清晰
+  --bg-base       #F6F1E7   奶油白，页面基础底色（留白感）
+  --glass         rgba(255,255,255,0.62)   毛玻璃卡片底色
+  --glass-strong  rgba(255,255,255,0.8)    更实的玻璃（激活态/按钮）
+  --glass-border  rgba(255,255,255,0.85)   玻璃高光边框
+  --ink           #2A1810   主文字
+  --ink-dim       #8A6F5C   次文字
+  --soy           #B4552E   陶土红棕，主强调（比之前更亮更饱和）
+  --flame         #D97A3F   灶火橙，价格/高亮
+  --scallion      #4F7A4A   葱绿，营业中
+  --rest          #9B8B78   灰褐，休息
+  --seal          #C0432B   印章红
+*/
+
+page {
+  background-color: #F6F1E7;
+  /* 更浅的奶油底色 + 四角淡淡的彩色光斑，玻璃卡片会把这层背景模糊透出一点颜色 */
+  background-image:
+    radial-gradient(circle at 8% 0%, rgba(255, 178, 122, 0.55) 0%, rgba(255, 178, 122, 0) 38%),
+    radial-gradient(circle at 100% 15%, rgba(255, 210, 150, 0.45) 0%, rgba(255, 210, 150, 0) 40%),
+    radial-gradient(circle at 100% 100%, rgba(226, 119, 90, 0.4) 0%, rgba(226, 119, 90, 0) 45%),
+    radial-gradient(circle at 0% 90%, rgba(127, 160, 107, 0.3) 0%, rgba(127, 160, 107, 0) 45%),
+    linear-gradient(160deg, #FBF6EC 0%, #F6F1E7 50%, #F2E9DA 100%);
+  background-attachment: fixed;
+  color: #2A1810;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+view, text {
+  box-sizing: border-box;
+}

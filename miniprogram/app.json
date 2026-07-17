@@ -1,0 +1,15 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/admin/admin"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#F2A65A",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "有点晚拌川",
+    "backgroundColor": "#F2A65A",
+    "backgroundTextStyle": "light"
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
+}
