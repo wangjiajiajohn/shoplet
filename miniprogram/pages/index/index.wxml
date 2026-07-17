@@ -24,16 +24,16 @@
   <view class="status-card">
     <view class="status-top">
       <text class="status-label">今日出摊状态</text>
-      <view class="seal {{info.isOn ? '' : 'rest'}}">
-        <text>{{info.isOn ? '营业中' : '今日休'}}</text>
+      <view class="seal {{info.status}}">
+        <text>{{info.status === 'started' ? '营业中' : info.status === 'closed' ? '已收摊' : '未出摊'}}</text>
       </view>
     </view>
     <view class="status-headline">
-      <view class="dot {{info.isOn ? '' : 'rest'}}"></view>
-      <text class="headline-text">{{info.isOn ? '正在出摊' : '今日不出摊'}}</text>
+      <view class="dot {{info.status}}"></view>
+      <text class="headline-text">{{info.status === 'started' ? '营业中' : info.status === 'closed' ? '已收摊' : '今日尚未出摊'}}</text>
     </view>
     <text class="status-desc">
-      {{info.isOn ? '老板已经支好摊子，铁锅正热着 —— 现在过去，拌川管够。' : '老板临时有事，今天先不出摊了，明天照常见～'}}
+      {{info.status === 'started' ? '老板已经支好摊子，铁锅正热着 —— 现在过去，拌川管够。' : info.status === 'closed' ? '老板已经收摊了，明天早点来～' : '老板还没出摊，记得关注出摊时间哦～'}}
     </text>
     <text wx:if="{{info.note}}" class="status-note">💬 {{info.note}}</text>
   </view>

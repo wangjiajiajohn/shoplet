@@ -1,7 +1,7 @@
 App({
   globalData: {
     stallInfo: {
-      isOn: true,
+      status: 'not_started',
       location: '杭州采荷中学南门',
       locationSub: '',
       latitude: 30.253,
@@ -9,15 +9,30 @@ App({
       time: '22:30 – 02:00',
       timeSub: '深夜档 · 卖完即收',
       note: '',
-      announcement: '周六休息一天，周日正常出摊'
+      announcement: '周六休息一天，周日正常出摊',
+      lastResetDate: ''
     }
   },
 
   onLaunch() {
-    // 启动时尝试从本地缓存读取老板保存过的出摊信息
     const saved = wx.getStorageSync('stallInfo');
     if (saved) {
       this.globalData.stallInfo = saved;
+    }
+    this.checkDailyReset();
+  },
+
+  checkDailyReset() {
+    const info = this.globalData.stallInfo;
+    const today = new Date().toDateString();
+    
+    if (info.lastResetDate !== today) {
+      const hour = new Date().getHours();
+      if (hour >= 6) {
+        info.status = 'not_started';
+        info.lastResetDate = today;
+        this.saveStallInfo(info);
+      }
     }
   },
 

@@ -10,6 +10,11 @@
     "backgroundColor": "#F2A65A",
     "backgroundTextStyle": "light"
   },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于在地图上选择出摊地点"
+    }
+  },
   "sitemapLocation": "sitemap.json",
   "style": "v2"
 }

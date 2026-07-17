@@ -73,15 +73,10 @@
   color: #6B5644;
   transition: all 0.2s ease;
 }
-.toggle-opt.on {
+.toggle-opt.sel {
   background: rgba(79,122,74,0.85);
   color: #FFFFFF;
   box-shadow: 0 6rpx 18rpx rgba(79,122,74,0.3);
-}
-.toggle-opt.off {
-  background: rgba(155,139,120,0.85);
-  color: #FFFFFF;
-  box-shadow: 0 6rpx 18rpx rgba(155,139,120,0.3);
 }
 
 /* 输入展示框 */
@@ -95,6 +90,20 @@
   padding: 26rpx 28rpx;
   font-size: 28rpx;
   color: #2A1810;
+}
+.loc-picker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.loc-picker:active {
+  background: rgba(255,255,255,0.55);
+}
+.loc-arrow {
+  font-size: 32rpx;
+  color: #8A6F5C;
+  font-weight: 300;
 }
 .input-real {
   background: rgba(255,255,255,0.4);

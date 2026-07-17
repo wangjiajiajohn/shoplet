@@ -3,24 +3,24 @@ const app = getApp();
 Page({
   data: {
     form: {
-      isOn: true,
+      status: 'not_started',
       location: '文一西路口',
       locationSub: '近电子科技大楼',
       time: '17:30 – 21:00',
       timeSub: '卖完即收摊',
       note: '',
-      announcement: ''
+      announcement: '',
+      lastResetDate: ''
     }
   },
 
   onShow() {
-    // 打开设置页时，读取当前已保存的出摊信息作为初始值
     this.setData({ form: app.getStallInfo() });
   },
 
   setStatus(e) {
-    const isOn = e.currentTarget.dataset.on;
-    this.setData({ 'form.isOn': isOn });
+    const status = e.currentTarget.dataset.status;
+    this.setData({ 'form.status': status });
   },
 
   setLoc(e) {
@@ -30,6 +30,22 @@ Page({
       'form.locationSub': sub,
       'form.latitude': parseFloat(lat),
       'form.longitude': parseFloat(lng)
+    });
+  },
+
+  chooseLocation() {
+    wx.chooseLocation({
+      success: (res) => {
+        this.setData({
+          'form.location': res.name || res.address,
+          'form.locationSub': res.name ? res.address : '',
+          'form.latitude': res.latitude,
+          'form.longitude': res.longitude
+        });
+      },
+      fail: () => {
+        wx.showToast({ title: '定位失败', icon: 'none' });
+      }
     });
   },
 

@@ -10,16 +10,18 @@
   <view class="field">
     <text class="field-label">营业状态</text>
     <view class="toggle-row">
-      <view class="toggle-opt {{form.isOn ? 'on' : ''}}" bindtap="setStatus" data-on="{{true}}">营业中</view>
-      <view class="toggle-opt {{!form.isOn ? 'off' : ''}}" bindtap="setStatus" data-on="{{false}}">今日休息</view>
+      <view class="toggle-opt {{form.status === 'not_started' ? 'sel' : ''}}" bindtap="setStatus" data-status="not_started">未出摊</view>
+      <view class="toggle-opt {{form.status === 'started' ? 'sel' : ''}}" bindtap="setStatus" data-status="started">营业中</view>
+      <view class="toggle-opt {{form.status === 'closed' ? 'sel' : ''}}" bindtap="setStatus" data-status="closed">已收摊</view>
     </view>
   </view>
 
   <!-- 出摊地点 -->
   <view class="field">
     <text class="field-label">出摊地点</text>
-    <view class="input-fake">
-      <text>{{form.location}} · {{form.locationSub}}</text>
+    <view class="input-fake loc-picker" bindtap="chooseLocation">
+      <text>{{form.location || '点击在地图上选择'}}</text>
+      <text class="loc-arrow">›</text>
     </view>
     <view class="preset-row">
       <view class="preset {{form.location === '文一西路口' ? 'sel' : ''}}" data-loc="文一西路口" data-sub="近电子科技大楼" data-lat="30.302" data-lng="120.098" bindtap="setLoc">文一西路口</view>

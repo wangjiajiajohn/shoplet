@@ -46,6 +46,7 @@ Page({
   },
 
   onShow() {
+    app.checkDailyReset();
     this.setData({ info: app.getStallInfo() });
     const savedReminder = wx.getStorageSync('stallReminder');
     if (savedReminder) {
