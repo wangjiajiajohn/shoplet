@@ -250,16 +250,6 @@
 .info-time:active {
   background: rgba(255,255,255,0.55);
 }
-.reminder-badge {
-  position: absolute;
-  right: 26rpx;
-  top: 26rpx;
-  font-size: 20rpx;
-  color: #fff;
-  background: #E08A3C;
-  padding: 4rpx 12rpx;
-  border-radius: 20rpx;
-}
 
 /* 分类切换 —— iOS 分段控件质感 */
 .cat-switch {

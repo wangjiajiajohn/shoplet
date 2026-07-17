@@ -47,13 +47,11 @@
       <text class="info-sub">{{info.locationSub}}</text>
       <text class="info-arrow">›</text>
     </view>
-    <view class="info-item info-time" bindtap="setReminder">
+    <view class="info-item info-time">
       <text class="info-icon">🕔</text>
       <text class="info-k">时间</text>
       <text class="info-v">{{info.time}}</text>
       <text class="info-sub">{{info.timeSub}}</text>
-      <text class="info-arrow">›</text>
-      <view wx:if="{{reminderSet}}" class="reminder-badge">已设</view>
     </view>
   </view>
 
