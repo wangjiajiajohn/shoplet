@@ -6,6 +6,8 @@ Page({
     activeCat: 'banchuan',
     statusBarHeight: 0,
     navBarHeight: 0,
+    rightSafe: 0,
+    reminderSet: false,
 
     // 拌川菜单 —— 实际使用时把 emoji 换成 image 组件 + 真实图片即可
     menuBanchuan: [
@@ -33,11 +35,26 @@ Page({
   onLoad() {
     const sysInfo = wx.getSystemInfoSync();
     const navBarHeight = sysInfo.statusBarHeight + 48;
-    this.setData({ statusBarHeight: sysInfo.statusBarHeight, navBarHeight });
+    const menuBtn = sysInfo.menuButtonBoundingClientRect;
+    const rightSafe = menuBtn ? (sysInfo.windowWidth - menuBtn.left + 16) : 28;
+    this.setData({ 
+      statusBarHeight: sysInfo.statusBarHeight, 
+      navBarHeight,
+      rightSafe
+    });
   },
 
   onShow() {
     this.setData({ info: app.getStallInfo() });
+    const savedReminder = wx.getStorageSync('stallReminder');
+    if (savedReminder) {
+      const now = Date.now();
+      if (savedReminder.time > now) {
+        this.setData({ reminderSet: true });
+      } else {
+        wx.removeStorageSync('stallReminder');
+      }
+    }
   },
 
   switchCat(e) {
@@ -56,6 +73,68 @@ Page({
       name: '有点晚拌川',
       address: location + (locationSub ? ' · ' + locationSub : ''),
       scale: 16
+    });
+  },
+
+  setReminder() {
+    const { time } = this.data.info;
+    const match = time.match(/(\d{2}):(\d{2})/);
+    if (!match) {
+      wx.showToast({ title: '时间格式有误', icon: 'none' });
+      return;
+    }
+    
+    const hours = parseInt(match[1]);
+    const minutes = parseInt(match[2]);
+    
+    const now = new Date();
+    const reminderTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0);
+    
+    if (reminderTime.getTime() < now.getTime()) {
+      reminderTime.setDate(reminderTime.getDate() + 1);
+    }
+    
+    const diff = reminderTime.getTime() - now.getTime();
+    
+    if (this.data.reminderSet) {
+      wx.showModal({
+        title: '取消提醒',
+        content: '确定取消出摊提醒吗？',
+        success: (res) => {
+          if (res.confirm) {
+            wx.removeStorageSync('stallReminder');
+            this.setData({ reminderSet: false });
+            wx.showToast({ title: '已取消', icon: 'success' });
+          }
+        }
+      });
+      return;
+    }
+    
+    wx.showModal({
+      title: '设置出摊提醒',
+      content: `将在 ${time.split(' – ')[0]} 提醒您出摊`,
+      success: (res) => {
+        if (res.confirm) {
+          wx.setStorageSync('stallReminder', {
+            time: reminderTime.getTime(),
+            hour: hours,
+            minute: minutes
+          });
+          this.setData({ reminderSet: true });
+          wx.showToast({ title: '提醒已设置', icon: 'success' });
+          
+          if (diff > 0 && diff < 24 * 60 * 60 * 1000) {
+            setTimeout(() => {
+              wx.showModal({
+                title: '出摊时间到！',
+                content: '老板正在出摊，快去吃拌川吧～',
+                showCancel: false
+              });
+            }, diff);
+          }
+        }
+      }
     });
   },
 

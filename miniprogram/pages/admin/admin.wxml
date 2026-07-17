@@ -41,6 +41,13 @@
     </view>
   </view>
 
+  <!-- 公告栏 -->
+  <view class="field">
+    <text class="field-label">公告栏（选填）</text>
+    <text class="field-hint">显示在首页顶部滚动，例如：周六休息</text>
+    <input class="input-real" placeholder="输入公告内容" value="{{form.announcement}}" bindinput="onAnnouncementInput" />
+  </view>
+
   <!-- 留言 -->
   <view class="field">
     <text class="field-label">今日留言（选填）</text>

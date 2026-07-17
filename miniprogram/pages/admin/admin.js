@@ -8,7 +8,8 @@ Page({
       locationSub: '近电子科技大楼',
       time: '17:30 – 21:00',
       timeSub: '卖完即收摊',
-      note: ''
+      note: '',
+      announcement: ''
     }
   },
 
@@ -38,6 +39,10 @@ Page({
 
   onNoteInput(e) {
     this.setData({ 'form.note': e.detail.value });
+  },
+
+  onAnnouncementInput(e) {
+    this.setData({ 'form.announcement': e.detail.value });
   },
 
   saveInfo() {

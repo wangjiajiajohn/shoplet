@@ -61,6 +61,43 @@
   box-shadow: 0 4rpx 16rpx rgba(122,54,38,0.1);
 }
 
+/* 消息滚动栏 */
+.scroll-bar-placeholder {
+  height: 56rpx;
+}
+.scroll-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 90;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  padding: 0 28rpx;
+  background: rgba(255,235,205,0.9);
+  border-bottom: 1rpx solid rgba(255,220,180,0.6);
+}
+.scroll-icon {
+  font-size: 24rpx;
+  margin-right: 12rpx;
+  flex-shrink: 0;
+}
+.scroll-track {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.scroll-text {
+  display: inline-block;
+  font-size: 24rpx;
+  color: #8B4513;
+  animation: scroll-left 12s linear infinite;
+}
+@keyframes scroll-left {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
 /* ---- 通用玻璃卡片 ---- */
 .glass {
   background: rgba(255,255,255,0.45);
@@ -205,6 +242,22 @@
   font-size: 32rpx;
   color: #8A6F5C;
   font-weight: 300;
+}
+.info-time {
+  cursor: pointer;
+}
+.info-time:active {
+  background: rgba(255,255,255,0.55);
+}
+.reminder-badge {
+  position: absolute;
+  right: 26rpx;
+  top: 26rpx;
+  font-size: 20rpx;
+  color: #fff;
+  background: #E08A3C;
+  padding: 4rpx 12rpx;
+  border-radius: 20rpx;
 }
 
 /* 分类切换 —— iOS 分段控件质感 */

@@ -42,8 +42,14 @@
   display: block;
   font-size: 22rpx;
   color: #6B5644;
-  margin-bottom: 16rpx;
+  margin-bottom: 8rpx;
   letter-spacing: 2rpx;
+}
+.field-hint {
+  display: block;
+  font-size: 20rpx;
+  color: #9A8B78;
+  margin-bottom: 12rpx;
 }
 
 /* 营业状态切换 —— 玻璃分段控件 */

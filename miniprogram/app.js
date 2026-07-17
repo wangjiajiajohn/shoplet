@@ -8,7 +8,8 @@ App({
       longitude: 120.199,
       time: '22:30 – 02:00',
       timeSub: '深夜档 · 卖完即收',
-      note: ''
+      note: '',
+      announcement: '周六休息一天，周日正常出摊'
     }
   },
 

@@ -5,10 +5,21 @@
   <view class="blob blob-3"></view>
 
   <!-- 玻璃导航栏 -->
-  <view class="nav-bar" style="padding-top:{{statusBarHeight}}px">
+  <view class="nav-bar" style="padding-top:{{statusBarHeight}}px; padding-right:{{rightSafe}}px">
     <text class="nav-title">有点晚拌川</text>
     <view class="nav-gear" bindtap="goAdmin">
       <text>⚙</text>
+    </view>
+  </view>
+
+  <!-- 消息滚动栏占位 -->
+  <view class="scroll-bar-placeholder" wx:if="{{info.announcement}}"></view>
+  
+  <!-- 消息滚动栏 -->
+  <view class="scroll-bar" wx:if="{{info.announcement}}" style="top:{{navBarHeight}}px">
+    <text class="scroll-icon">📢</text>
+    <view class="scroll-track">
+      <text class="scroll-text">{{info.announcement}}</text>
     </view>
   </view>
 
@@ -39,16 +50,18 @@
       <text class="info-sub">{{info.locationSub}}</text>
       <text class="info-arrow">›</text>
     </view>
-    <view class="info-item">
+    <view class="info-item info-time" bindtap="setReminder">
       <text class="info-icon">🕔</text>
       <text class="info-k">时间</text>
       <text class="info-v">{{info.time}}</text>
       <text class="info-sub">{{info.timeSub}}</text>
+      <text class="info-arrow">›</text>
+      <view wx:if="{{reminderSet}}" class="reminder-badge">已设</view>
     </view>
   </view>
 
   <!-- 分类切换 -->
-  <view class="cat-switch" style="top:{{navBarHeight}}px">
+  <view class="cat-switch" style="top:{{navBarHeight + (info.announcement ? 56 : 0)}}px">
     <view class="cat-btn {{activeCat === 'banchuan' ? 'active' : ''}}" data-cat="banchuan" bindtap="switchCat">拌川</view>
     <view class="cat-btn {{activeCat === 'topping' ? 'active' : ''}}" data-cat="topping" bindtap="switchCat">浇头</view>
     <view class="cat-btn {{activeCat === 'drink' ? 'active' : ''}}" data-cat="drink" bindtap="switchCat">饮品</view>
