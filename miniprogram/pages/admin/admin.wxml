@@ -12,7 +12,7 @@
     <view class="toggle-row">
       <view class="toggle-opt {{form.status === 'not_started' ? 'sel' : ''}}" bindtap="setStatus" data-status="not_started">未出摊</view>
       <view class="toggle-opt {{form.status === 'started' ? 'sel' : ''}}" bindtap="setStatus" data-status="started">营业中</view>
-      <view class="toggle-opt {{form.status === 'closed' ? 'sel' : ''}}" bindtap="setStatus" data-status="closed">已收摊</view>
+      <view class="toggle-opt {{form.status === 'ended' ? 'sel' : ''}}" bindtap="setStatus" data-status="ended">已收摊</view>
     </view>
   </view>
 
@@ -54,6 +54,104 @@
     <input class="input-real" placeholder="例如：今天多进了牛肉，先到先得" value="{{form.note}}" bindinput="onNoteInput" />
   </view>
 
+  <!-- 菜单管理 -->
+  <view class="field menu-section">
+    <view class="section-header">
+      <text class="field-label">菜单管理</text>
+      <view class="add-btn" bindtap="showAddCategoryModal">+ 添加分类</view>
+    </view>
+
+    <view class="category-list">
+      <view class="category-card" wx:for="{{menu.categories}}" wx:for-item="category" wx:key="id">
+        <view class="category-header">
+          <text class="category-icon">{{category.icon}}</text>
+          <text class="category-name">{{category.name}}</text>
+          <view class="category-actions">
+            <text class="action-btn edit" bindtap="editCategory" data-id="{{category.id}}">编辑</text>
+            <text class="action-btn delete" bindtap="deleteCategory" data-id="{{category.id}}">删除</text>
+          </view>
+        </view>
+        <view class="product-list">
+          <view class="product-item" wx:for="{{menu.products[category.id]}}" wx:for-item="product" wx:key="id">
+            <text class="product-emoji">{{product.emoji}}</text>
+            <view class="product-info">
+              <text class="product-name">{{product.name}}</text>
+              <text class="product-price">{{product.price}}</text>
+            </view>
+            <view class="product-actions">
+              <text class="action-btn edit" bindtap="editProduct" data-cat="{{category.id}}" data-pid="{{product.id}}">编辑</text>
+              <text class="action-btn delete" bindtap="deleteProduct" data-cat="{{category.id}}" data-pid="{{product.id}}">删除</text>
+            </view>
+          </view>
+        </view>
+        <view class="add-product-btn" bindtap="showAddProductModal" data-cat="{{category.id}}">+ 添加商品</view>
+      </view>
+    </view>
+  </view>
+
   <button class="save-btn" bindtap="saveInfo">保存并发布给顾客</button>
+
+  <!-- 添加分类弹窗 -->
+  <view class="modal" wx:if="{{showCategoryModal}}">
+    <view class="modal-content">
+      <text class="modal-title">{{editingCategory ? '编辑分类' : '添加分类'}}</text>
+      <view class="modal-field">
+        <text class="modal-label">分类名称</text>
+        <input class="modal-input" placeholder="输入分类名称" value="{{categoryForm.name}}" bindinput="onCategoryNameInput" />
+      </view>
+      <view class="modal-field">
+        <text class="modal-label">分类图标</text>
+        <view class="emoji-picker">
+          <text class="emoji-option" wx:for="{{emojiOptions}}" wx:key="*this" bindtap="selectEmoji" data-emoji="{{item}}">{{item}}</text>
+        </view>
+        <text class="selected-emoji">{{categoryForm.icon}}</text>
+      </view>
+      <view class="modal-btns">
+        <button class="modal-btn cancel" bindtap="hideCategoryModal">取消</button>
+        <button class="modal-btn confirm" bindtap="saveCategory">保存</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加商品弹窗 -->
+  <view class="modal" wx:if="{{showProductModal}}">
+    <view class="modal-content">
+      <text class="modal-title">{{editingProduct ? '编辑商品' : '添加商品'}}</text>
+      <view class="modal-field">
+        <text class="modal-label">商品名称</text>
+        <input class="modal-input" placeholder="输入商品名称" value="{{productForm.name}}" bindinput="onProductNameInput" />
+      </view>
+      <view class="modal-field">
+        <text class="modal-label">商品描述</text>
+        <input class="modal-input" placeholder="输入商品描述" value="{{productForm.desc}}" bindinput="onProductDescInput" />
+      </view>
+      <view class="modal-field">
+        <text class="modal-label">价格</text>
+        <input class="modal-input" placeholder="例如：¥15 或 +¥8" value="{{productForm.price}}" bindinput="onProductPriceInput" />
+      </view>
+      <view class="modal-field">
+        <text class="modal-label">价格后缀（选填）</text>
+        <input class="modal-input" placeholder="例如：/份" value="{{productForm.priceSuffix}}" bindinput="onProductPriceSuffixInput" />
+      </view>
+      <view class="modal-field">
+        <text class="modal-label">商品图标</text>
+        <view class="emoji-picker">
+          <text class="emoji-option" wx:for="{{emojiOptions}}" wx:key="*this" bindtap="selectProductEmoji" data-emoji="{{item}}">{{item}}</text>
+        </view>
+        <text class="selected-emoji">{{productForm.emoji}}</text>
+      </view>
+      <view class="modal-field">
+        <text class="modal-label">招牌标记</text>
+        <view class="toggle-row small">
+          <view class="toggle-opt {{!productForm.hot ? 'sel' : ''}}" bindtap="toggleProductHot">否</view>
+          <view class="toggle-opt {{productForm.hot ? 'sel' : ''}}" bindtap="toggleProductHot">是</view>
+        </view>
+      </view>
+      <view class="modal-btns">
+        <button class="modal-btn cancel" bindtap="hideProductModal">取消</button>
+        <button class="modal-btn confirm" bindtap="saveProduct">保存</button>
+      </view>
+    </view>
+  </view>
 
 </view>
