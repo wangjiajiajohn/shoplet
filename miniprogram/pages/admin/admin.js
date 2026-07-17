@@ -6,8 +6,8 @@ Page({
       status: 'not_started',
       location: '文一西路口',
       locationSub: '近电子科技大楼',
-      time: '17:30 – 21:00',
-      timeSub: '卖完即收摊',
+      time: '17:30',
+      timeSub: '',
       note: '',
       announcement: '',
       lastResetDate: ''
@@ -15,7 +15,16 @@ Page({
   },
 
   onShow() {
-    this.setData({ form: app.getStallInfo() });
+    const info = app.getStallInfo();
+    if (info.time && info.time.includes('–')) {
+      const match = info.time.match(/(\d{2}:\d{2})/);
+      if (match) {
+        info.time = match[1];
+        info.timeSub = '';
+        app.saveStallInfo(info);
+      }
+    }
+    this.setData({ form: info });
   },
 
   setStatus(e) {
@@ -49,8 +58,8 @@ Page({
     });
   },
 
-  setTime(e) {
-    this.setData({ 'form.time': e.currentTarget.dataset.time });
+  onTimeChange(e) {
+    this.setData({ 'form.time': e.detail.value });
   },
 
   onNoteInput(e) {

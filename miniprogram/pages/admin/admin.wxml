@@ -33,14 +33,12 @@
   <!-- 出摊时间 -->
   <view class="field">
     <text class="field-label">出摊时间</text>
-    <view class="input-fake">
-      <text>{{form.time}}</text>
-    </view>
-    <view class="preset-row">
-      <view class="preset {{form.time === '17:30 – 21:00' ? 'sel' : ''}}" data-time="17:30 – 21:00" bindtap="setTime">17:30–21:00</view>
-      <view class="preset {{form.time === '11:00 – 13:30' ? 'sel' : ''}}" data-time="11:00 – 13:30" bindtap="setTime">午市</view>
-      <view class="preset {{form.time === '18:00 – 22:00' ? 'sel' : ''}}" data-time="18:00 – 22:00" bindtap="setTime">晚市加长</view>
-    </view>
+    <picker mode="time" value="{{form.time}}" bindchange="onTimeChange">
+      <view class="input-fake loc-picker">
+        <text>{{form.time || '选择出摊时间'}}</text>
+        <text class="loc-arrow">›</text>
+      </view>
+    </picker>
   </view>
 
   <!-- 公告栏 -->

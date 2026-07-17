@@ -6,8 +6,8 @@ App({
       locationSub: '',
       latitude: 30.253,
       longitude: 120.199,
-      time: '22:30 – 02:00',
-      timeSub: '深夜档 · 卖完即收',
+      time: '22:30',
+      timeSub: '',
       note: '',
       announcement: '周六休息一天，周日正常出摊',
       lastResetDate: ''
@@ -38,8 +38,19 @@ App({
 
   // 供各页面统一读取
   getStallInfo() {
-    const saved = wx.getStorageSync('stallInfo');
-    return saved || this.globalData.stallInfo;
+    let saved = wx.getStorageSync('stallInfo');
+    if (saved) {
+      if (saved.time && saved.time.includes('–')) {
+        const match = saved.time.match(/(\d{2}:\d{2})/);
+        if (match) {
+          saved.time = match[1];
+          saved.timeSub = '';
+          this.saveStallInfo(saved);
+        }
+      }
+      return saved;
+    }
+    return this.globalData.stallInfo;
   },
 
   // 供老板端保存
