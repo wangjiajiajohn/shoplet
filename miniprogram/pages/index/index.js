@@ -96,6 +96,10 @@ Page({
     wx.navigateTo({ url: '/pages/admin/admin' });
   },
 
+  goShopDetail() {
+    wx.navigateTo({ url: '/pages/shop-detail/shop-detail' });
+  },
+
   makePhoneCall() {
     const phone = this.data.info.phone;
     if (!phone) return;

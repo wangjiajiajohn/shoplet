@@ -6,12 +6,18 @@
 
   <!-- 玻璃导航栏 -->
   <view class="nav-bar" style="padding-top:{{statusBarHeight}}px">
+    <view class="nav-left">
+      <view class="nav-menu" bindtap="goShopDetail">
+        <text class="menu-icon">☰</text>
+      </view>
+    </view>
     <view class="nav-center">
       <text class="nav-title" bindtap="onTitleTap">{{loading ? 'loading...' : (info.title || '深夜食堂')}}</text>
       <view class="nav-refresh" bindtap="onRefresh">
         <text class="refresh-icon {{loading ? 'loading' : ''}}">↻</text>
       </view>
     </view>
+    <view class="nav-right" style="width:{{rightSafe}}rpx"></view>
   </view>
 
   <!-- 消息滚动栏占位 -->
@@ -95,26 +101,6 @@
   <view class="empty-state" wx:if="{{!menu.categories || menu.categories.length === 0}}">
     <text class="empty-icon">🍜</text>
     <text class="empty-text">老板正在准备菜单...</text>
-  </view>
-
-  <!-- 联系人区域 -->
-  <view wx:if="{{false}}" class="contact-card" bindtap="makePhoneCall">
-    <view class="contact-icon">📞</view>
-    <view class="contact-info">
-      <text class="contact-label">联系老板</text>
-      <text class="contact-phone">{{info.phone}}</text>
-    </view>
-    <text class="contact-arrow">›</text>
-  </view>
-
-  <!-- 微信二维码 -->
-  <view wx:if="{{info.qrcode}}" class="qrcode-card">
-    <view class="qrcode-header">
-      <text class="qrcode-icon">💬</text>
-      <text class="qrcode-label">添加微信好友</text>
-    </view>
-    <image class="qrcode-image" src="{{info.qrcode}}" mode="aspectFit" show-menu-by-longpress="true" />
-    <text class="qrcode-hint">长按识别二维码添加好友</text>
   </view>
 
   <text class="footer-note">灶火不熄 · 明天再见</text>

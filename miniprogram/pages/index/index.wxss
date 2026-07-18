@@ -26,7 +26,7 @@
   height: calc(var(--status-bar-height) + 96rpx);
   display: flex;
   align-items: flex-end;
-  justify-content: center;
+  justify-content: space-between;
   padding-bottom: 16rpx;
   padding-left: 28rpx;
   padding-right: 28rpx;
@@ -38,8 +38,35 @@
     0 8rpx 32rpx rgba(92,38,25,0.08),
     inset 0 1rpx 0 rgba(255,255,255,0.8);
 }
-.nav-center {
+.nav-left {
+  width: 64rpx;
   display: flex;
+  align-items: center;
+}
+.nav-right {
+  width: 64rpx;
+}
+.nav-menu {
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+}
+.nav-menu:active {
+  background: rgba(180,85,46,0.2);
+}
+.menu-icon {
+  font-size: 32rpx;
+  color: #2A1810;
+  font-weight: 500;
+}
+.nav-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
   align-items: center;
   gap: 12rpx;
 }

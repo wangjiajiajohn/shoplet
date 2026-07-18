@@ -1,0 +1,36 @@
+<view class="page">
+  <view class="blob blob-1"></view>
+  <view class="blob blob-2"></view>
+  <view class="blob blob-3"></view>
+
+  <view class="nav-bar" style="padding-top:{{statusBarHeight}}px; height:{{navBarHeight}}px">
+    <view class="nav-back" bindtap="goBack">
+      <text class="back-icon">‹</text>
+    </view>
+    <text class="nav-title">{{info.title || '店铺详情'}}</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <view class="content" style="padding-top:{{navBarHeight}}px">
+    <view class="card">
+      <text class="card-title">添加微信好友</text>
+      <text class="card-sub">长按二维码识别添加好友</text>
+      <view class="qrcode-wrapper">
+        <image wx:if="{{info.qrcode}}" class="qrcode-image" src="{{info.qrcode}}" mode="aspectFit" show-menu-by-longpress="true" />
+        <view wx:else class="qrcode-placeholder">
+          <text class="placeholder-icon">📷</text>
+          <text class="placeholder-text">暂无二维码</text>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{info.phone}}" class="card">
+      <text class="card-title">联系电话</text>
+      <view class="phone-row" bindtap="makePhoneCall">
+        <text class="phone-icon">📞</text>
+        <text class="phone-number">{{info.phone}}</text>
+        <text class="phone-arrow">›</text>
+      </view>
+    </view>
+  </view>
+</view>
