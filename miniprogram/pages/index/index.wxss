@@ -263,7 +263,6 @@
 /* 分类切换 —— iOS 分段控件质感 */
 .cat-switch-wrapper {
   position: sticky;
-  top: 0;
   z-index: 50;
   padding-top: 12rpx;
   background: rgba(246,241,231,0.95);
@@ -297,9 +296,26 @@
 }
 
 /* 菜单卡片 */
-.menu-group {
+.menu-container {
   position: relative;
   z-index: 1;
+}
+.menu-group {
+  transition: opacity 0.2s ease;
+}
+.menu-group-active {
+  display: block;
+  visibility: visible;
+  opacity: 1;
+}
+.menu-group-hidden {
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  position: absolute;
+  pointer-events: none;
 }
 
 .menu-item {
