@@ -2,19 +2,6 @@ const app = getApp();
 
 Page({
   data: {
-    activeTab: 'daily',
-    form: {
-      status: 'not_started',
-      location: '',
-      locationSub: '',
-      latitude: null,
-      longitude: null,
-      time: '',
-      timeSub: '',
-      note: '',
-      announcement: '',
-      lastResetDate: ''
-    },
     menu: {},
     showCategoryModal: false,
     showProductModal: false,
@@ -41,15 +28,6 @@ Page({
   async onShow() {
     this.setData({ loading: true });
     try {
-      let info = await app.getStallInfo();
-      if (info.time && info.time.includes('–')) {
-        const match = info.time.match(/(\d{2}:\d{2})/);
-        if (match) {
-          info.time = match[1];
-          info.timeSub = '';
-          await app.saveStallInfo(info);
-        }
-      }
       let menu = await app.getMenu();
       if (!menu || !menu.categories || menu.categories.length === 0 || !menu.products) {
         menu = app.globalData.menu;
@@ -58,8 +36,7 @@ Page({
       if (!menu.products) {
         menu.products = {};
       }
-      this.setData({
-        form: info,
+      this.setData({ 
         menu: menu,
         loading: false
       });
@@ -68,78 +45,6 @@ Page({
       this.setData({ loading: false });
     }
   },
-
-  switchTab(e) {
-    const tab = e.currentTarget.dataset.tab;
-    this.setData({ activeTab: tab });
-  },
-
-  // ========== 每日设置功能 ==========
-
-  setStatus(e) {
-    const status = e.currentTarget.dataset.status;
-    this.setData({ 'form.status': status });
-  },
-
-  setLoc(e) {
-    const { loc, sub, lat, lng } = e.currentTarget.dataset;
-    this.setData({
-      'form.location': loc,
-      'form.locationSub': sub,
-      'form.latitude': parseFloat(lat),
-      'form.longitude': parseFloat(lng)
-    });
-    app.saveStallInfo(this.data.form).catch(err => {
-      console.error('保存位置失败:', err);
-    });
-  },
-
-  async chooseLocation() {
-    wx.chooseLocation({
-      success: (res) => {
-        this.setData({
-          'form.location': res.name || res.address,
-          'form.locationSub': res.name ? res.address : '',
-          'form.latitude': res.latitude,
-          'form.longitude': res.longitude
-        });
-        app.saveStallInfo(this.data.form).catch(err => {
-          console.error('保存位置失败:', err);
-        });
-      },
-      fail: () => {
-        wx.showToast({ title: '定位失败', icon: 'none' });
-      }
-    });
-  },
-
-  onTimeChange(e) {
-    this.setData({ 'form.time': e.detail.value });
-  },
-
-  onNoteInput(e) {
-    this.setData({ 'form.note': e.detail.value });
-  },
-
-  onAnnouncementInput(e) {
-    this.setData({ 'form.announcement': e.detail.value });
-  },
-
-  async saveStallInfo() {
-    try {
-      await app.saveStallInfo(this.data.form);
-      wx.showToast({
-        title: '已发布给顾客',
-        icon: 'success',
-        duration: 1500
-      });
-    } catch (error) {
-      console.error('保存失败:', error);
-      wx.showToast({ title: '保存失败', icon: 'none' });
-    }
-  },
-
-  // ========== 商品管理功能 ==========
 
   async saveMenu() {
     try {
@@ -299,20 +204,20 @@ Page({
         sizeType: ['compressed'],
         sourceType: ['album', 'camera']
       });
-
+      
       if (res.tempFiles && res.tempFiles.length > 0) {
         const tempFile = res.tempFiles[0];
-        const fileName = 'products/' + Date.now() + '_' + Math.random().toString(36).substr(2, 9) + '.jpg';
-
+        const fileName = `products/${Date.now()}_${Math.random().toString(36).substr(2, 9)}.jpg`;
+        
         wx.showLoading({ title: '上传中...' });
-
+        
         const uploadRes = await wx.cloud.uploadFile({
           cloudPath: fileName,
           filePath: tempFile.tempFilePath
         });
-
+        
         wx.hideLoading();
-
+        
         if (uploadRes.fileID) {
           this.setData({ 'productForm.image': uploadRes.fileID });
           wx.showToast({ title: '上传成功', icon: 'success' });
@@ -342,7 +247,7 @@ Page({
 
     const menu = this.data.menu;
     const catId = this.data.currentCategoryId;
-
+    
     if (this.data.editingProduct) {
       const idx = menu.products[catId].findIndex(p => p.id === this.data.editingProduct.pid);
       if (idx !== -1) {

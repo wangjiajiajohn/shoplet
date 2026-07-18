@@ -66,20 +66,20 @@
   <view class="menu-group" wx:if="{{menu.categories && menu.categories.length > 0 && menu.products[activeCat] && menu.products[activeCat].length > 0}}">
     <view class="menu-item" wx:for="{{menu.products[activeCat]}}" wx:for-item="product" wx:key="id">
         <view class="menu-thumb">
-          <image wx:if="{{product.image}}" class="menu-thumb-img" src="{{product.image}}" mode="aspectFill" />
+          <image wx:if="{{product.image}}" class="menu-thumb-img" src="{{product.image}}" mode="aspectFill"></image>
           <text wx:else class="menu-thumb-emoji">{{product.emoji}}</text>
           <text wx:if="{{product.hot}}" class="hot-tag">招牌</text>
         </view>
-      <view class="menu-content">
-        <view class="menu-body">
-          <text class="menu-name">{{product.name}}</text>
-          <text class="menu-desc">{{product.desc}}</text>
+        <view class="menu-content">
+          <view class="menu-body">
+            <text class="menu-name">{{product.name}}</text>
+            <text class="menu-desc">{{product.desc}}</text>
+          </view>
+          <view class="menu-price-box">
+            <text class="menu-price">{{product.price}}</text>
+            <text wx:if="{{product.priceSuffix}}" class="menu-price-sub">{{product.priceSuffix}}</text>
+          </view>
         </view>
-        <view class="menu-price-box">
-          <text class="menu-price">{{product.price}}</text>
-          <text wx:if="{{product.priceSuffix}}" class="menu-price-sub">{{product.priceSuffix}}</text>
-        </view>
-      </view>
     </view>
   </view>
 
@@ -87,7 +87,6 @@
   <view class="empty-state" wx:if="{{!menu.categories || menu.categories.length === 0}}">
     <text class="empty-icon">🍜</text>
     <text class="empty-text">老板正在准备菜单...</text>
-    <text class="empty-subtext">点击标题5次进入设置</text>
   </view>
 
   <text class="footer-note">灶火不熄 · 明天再见</text>

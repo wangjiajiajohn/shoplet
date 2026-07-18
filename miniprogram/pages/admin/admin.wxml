@@ -3,94 +3,113 @@
   <view class="blob blob-1"></view>
   <view class="blob blob-2"></view>
 
-  <text class="panel-title">今日出摊设置</text>
-  <text class="panel-sub">改完点保存，顾客端立即更新</text>
-
-  <!-- 营业状态 -->
-  <view class="field">
-    <text class="field-label">营业状态</text>
-    <view class="toggle-row">
-      <view class="toggle-opt {{form.status === 'not_started' ? 'sel' : ''}}" bindtap="setStatus" data-status="not_started">未出摊</view>
-      <view class="toggle-opt {{form.status === 'started' ? 'sel' : ''}}" bindtap="setStatus" data-status="started">营业中</view>
-      <view class="toggle-opt {{form.status === 'ended' ? 'sel' : ''}}" bindtap="setStatus" data-status="ended">已收摊</view>
+  <!-- Tab切换 -->
+  <view class="tab-wrapper">
+    <view class="tab-item {{activeTab === 'daily' ? 'active' : ''}}" bindtap="switchTab" data-tab="daily">
+      每日设置
+    </view>
+    <view class="tab-item {{activeTab === 'menu' ? 'active' : ''}}" bindtap="switchTab" data-tab="menu">
+      商品管理
     </view>
   </view>
 
-  <!-- 出摊地点 -->
-  <view class="field">
-    <text class="field-label">出摊地点</text>
-    <view class="input-fake loc-picker" bindtap="chooseLocation">
-      <text>{{form.location || '点击在地图上选择'}}</text>
-      <text class="loc-arrow">›</text>
-    </view>
-    <view class="preset-row">
-      <view class="preset {{form.location === '文一西路口' ? 'sel' : ''}}" data-loc="文一西路口" data-sub="近电子科技大楼" data-lat="30.302" data-lng="120.098" bindtap="setLoc">文一西路口</view>
-      <view class="preset {{form.location === '古翠路夜市' ? 'sel' : ''}}" data-loc="古翠路夜市" data-sub="3号灯柱旁" data-lat="30.298" data-lng="120.085" bindtap="setLoc">古翠路夜市</view>
-      <view class="preset {{form.location === '留下老街口' ? 'sel' : ''}}" data-loc="留下老街口" data-sub="" data-lat="30.258" data-lng="120.048" bindtap="setLoc">留下老街口</view>
-    </view>
-  </view>
+  <!-- 每日设置内容 -->
+  <view wx:if="{{activeTab === 'daily'}}" class="tab-content">
+    <text class="panel-title">今日出摊设置</text>
+    <text class="panel-sub">改完点保存，顾客端立即更新</text>
 
-  <!-- 出摊时间 -->
-  <view class="field">
-    <text class="field-label">出摊时间</text>
-    <picker mode="time" value="{{form.time}}" bindchange="onTimeChange">
-      <view class="input-fake loc-picker">
-        <text>{{form.time || '选择出摊时间'}}</text>
+    <!-- 营业状态 -->
+    <view class="field">
+      <text class="field-label">营业状态</text>
+      <view class="toggle-row">
+        <view class="toggle-opt {{form.status === 'not_started' ? 'sel' : ''}}" bindtap="setStatus" data-status="not_started">未出摊</view>
+        <view class="toggle-opt {{form.status === 'started' ? 'sel' : ''}}" bindtap="setStatus" data-status="started">营业中</view>
+        <view class="toggle-opt {{form.status === 'ended' ? 'sel' : ''}}" bindtap="setStatus" data-status="ended">已收摊</view>
+      </view>
+    </view>
+
+    <!-- 出摊地点 -->
+    <view class="field">
+      <text class="field-label">出摊地点</text>
+      <view class="input-fake loc-picker" bindtap="chooseLocation">
+        <text>{{form.location || '点击在地图上选择'}}</text>
         <text class="loc-arrow">›</text>
       </view>
-    </picker>
-  </view>
-
-  <!-- 公告栏 -->
-  <view class="field">
-    <text class="field-label">公告栏（选填）</text>
-    <text class="field-hint">显示在首页顶部滚动，例如：周六休息</text>
-    <input class="input-real" placeholder="输入公告内容" value="{{form.announcement}}" bindinput="onAnnouncementInput" />
-  </view>
-
-  <!-- 留言 -->
-  <view class="field">
-    <text class="field-label">今日留言（选填）</text>
-    <input class="input-real" placeholder="例如：今天多进了牛肉，先到先得" value="{{form.note}}" bindinput="onNoteInput" />
-  </view>
-
-  <!-- 菜单管理 -->
-  <view class="field menu-section">
-    <view class="section-header">
-      <text class="field-label">菜单管理</text>
-      <view class="add-btn" bindtap="showAddCategoryModal">+ 添加分类</view>
+      <view class="preset-row">
+        <view class="preset {{form.location === '文一西路口' ? 'sel' : ''}}" data-loc="文一西路口" data-sub="近电子科技大楼" data-lat="30.302" data-lng="120.098" bindtap="setLoc">文一西路口</view>
+        <view class="preset {{form.location === '古翠路夜市' ? 'sel' : ''}}" data-loc="古翠路夜市" data-sub="3号灯柱旁" data-lat="30.298" data-lng="120.085" bindtap="setLoc">古翠路夜市</view>
+        <view class="preset {{form.location === '留下老街口' ? 'sel' : ''}}" data-loc="留下老街口" data-sub="" data-lat="30.258" data-lng="120.048" bindtap="setLoc">留下老街口</view>
+      </view>
     </view>
 
-    <view class="category-list">
-      <view class="category-card" wx:for="{{menu.categories}}" wx:for-item="category" wx:key="id">
-        <view class="category-header">
-          <text class="category-icon">{{category.icon}}</text>
-          <text class="category-name">{{category.name}}</text>
-          <view class="category-actions">
-            <text class="action-btn edit" bindtap="editCategory" data-id="{{category.id}}">编辑</text>
-            <text class="action-btn delete" bindtap="deleteCategory" data-id="{{category.id}}">删除</text>
-          </view>
+    <!-- 出摊时间 -->
+    <view class="field">
+      <text class="field-label">出摊时间</text>
+      <picker mode="time" value="{{form.time}}" bindchange="onTimeChange">
+        <view class="input-fake loc-picker">
+          <text>{{form.time || '选择出摊时间'}}</text>
+          <text class="loc-arrow">›</text>
         </view>
-        <view class="product-list">
-          <view class="product-item" wx:for="{{menu.products[category.id]}}" wx:for-item="product" wx:key="id">
-            <image wx:if="{{product.image}}" class="product-image" src="{{product.image}}" mode="aspectFill" />
-            <text wx:else class="product-emoji">{{product.emoji}}</text>
-            <view class="product-info">
-              <text class="product-name">{{product.name}}</text>
-              <text class="product-price">{{product.price}}</text>
-            </view>
-            <view class="product-actions">
-              <text class="action-btn edit" bindtap="editProduct" data-cat="{{category.id}}" data-pid="{{product.id}}">编辑</text>
-              <text class="action-btn delete" bindtap="deleteProduct" data-cat="{{category.id}}" data-pid="{{product.id}}">删除</text>
+      </picker>
+    </view>
+
+    <!-- 公告栏 -->
+    <view class="field">
+      <text class="field-label">公告栏（选填）</text>
+      <text class="field-hint">显示在首页顶部滚动，例如：周六休息</text>
+      <input class="input-real" placeholder="输入公告内容" value="{{form.announcement}}" bindinput="onAnnouncementInput" />
+    </view>
+
+    <!-- 留言 -->
+    <view class="field">
+      <text class="field-label">今日留言（选填）</text>
+      <input class="input-real" placeholder="例如：今天多进了牛肉，先到先得" value="{{form.note}}" bindinput="onNoteInput" />
+    </view>
+
+    <button class="save-btn" bindtap="saveStallInfo">保存并发布给顾客</button>
+  </view>
+
+  <!-- 商品管理内容 -->
+  <view wx:if="{{activeTab === 'menu'}}" class="tab-content">
+    <text class="panel-title">商品管理</text>
+    <text class="panel-sub">管理您的菜单分类和商品</text>
+
+    <!-- 菜单管理 -->
+    <view class="field menu-section">
+      <view class="section-header">
+        <text class="field-label">分类管理</text>
+        <view class="add-btn" bindtap="showAddCategoryModal">+ 添加分类</view>
+      </view>
+
+      <view class="category-list">
+        <view class="category-card" wx:for="{{menu.categories}}" wx:for-item="category" wx:key="id">
+          <view class="category-header">
+            <text class="category-icon">{{category.icon}}</text>
+            <text class="category-name">{{category.name}}</text>
+            <view class="category-actions">
+              <text class="action-btn edit" bindtap="editCategory" data-id="{{category.id}}">编辑</text>
+              <text class="action-btn delete" bindtap="deleteCategory" data-id="{{category.id}}">删除</text>
             </view>
           </view>
+          <view class="product-list">
+            <view class="product-item" wx:for="{{menu.products[category.id]}}" wx:for-item="product" wx:key="id">
+              <image wx:if="{{product.image}}" class="product-image" src="{{product.image}}" mode="aspectFill" />
+              <text wx:else class="product-emoji">{{product.emoji}}</text>
+              <view class="product-info">
+                <text class="product-name">{{product.name}}</text>
+                <text class="product-price">{{product.price}}</text>
+              </view>
+              <view class="product-actions">
+                <text class="action-btn edit" bindtap="editProduct" data-cat="{{category.id}}" data-pid="{{product.id}}">编辑</text>
+                <text class="action-btn delete" bindtap="deleteProduct" data-cat="{{category.id}}" data-pid="{{product.id}}">删除</text>
+              </view>
+            </view>
+          </view>
+          <view class="add-product-btn" bindtap="showAddProductModal" data-cat="{{category.id}}">+ 添加商品</view>
         </view>
-        <view class="add-product-btn" bindtap="showAddProductModal" data-cat="{{category.id}}">+ 添加商品</view>
       </view>
     </view>
   </view>
-
-  <button class="save-btn" bindtap="saveInfo">保存并发布给顾客</button>
 
   <!-- 添加分类弹窗 -->
   <view class="modal" wx:if="{{showCategoryModal}}">
