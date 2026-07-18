@@ -9,7 +9,9 @@ Page({
     navBarHeight: 0,
     rightSafe: 0,
     tapCount: 0,
-    loading: true
+    loading: true,
+    animatedCards: {},
+    animatedProducts: {}
   },
 
   onLoad() {
@@ -48,6 +50,7 @@ Page({
         activeCat,
         loading: false
       });
+      this.initAnimation();
     } catch (error) {
       console.error('加载数据失败:', error);
       this.setData({ loading: false });
@@ -55,7 +58,28 @@ Page({
   },
 
   switchCat(e) {
-    this.setData({ activeCat: e.currentTarget.dataset.cat });
+    const newCat = e.currentTarget.dataset.cat;
+    this.setData({ 
+      activeCat: newCat,
+      animatedProducts: {}
+    });
+    setTimeout(() => {
+      this.triggerProductAnimations();
+    }, 100);
+  },
+
+  triggerProductAnimations() {
+    const { menu, activeCat } = this.data;
+    if (!menu.products || !menu.products[activeCat]) return;
+    
+    const products = menu.products[activeCat];
+    products.forEach((product, index) => {
+      setTimeout(() => {
+        this.setData({
+          [`animatedProducts.${product.id}`]: true
+        });
+      }, index * 80);
+    });
   },
 
   openMap() {
@@ -98,6 +122,78 @@ Page({
 
   goShopDetail() {
     wx.navigateTo({ url: '/pages/shop-detail/shop-detail' });
+  },
+
+  initAnimation() {
+    setTimeout(() => {
+      this.animateOnLoad();
+      this.triggerProductAnimations();
+    }, 100);
+  },
+
+  animateOnLoad() {
+    const cards = ['status', 'loc', 'time'];
+    cards.forEach((card, index) => {
+      setTimeout(() => {
+        this.setData({
+          [`animatedCards.${card}`]: true
+        });
+      }, index * 100);
+    });
+  },
+
+  triggerProductAnimations() {
+    const { menu, activeCat, animatedProducts } = this.data;
+    if (!menu.products || !menu.products[activeCat]) return;
+    
+    const products = menu.products[activeCat];
+    const windowHeight = wx.getSystemInfoSync().windowHeight;
+    
+    products.forEach((product, index) => {
+      const query = wx.createSelectorQuery();
+      query.select(`#product-${product.id}`).boundingClientRect((rect) => {
+        if (rect && rect.top < windowHeight + 100) {
+          setTimeout(() => {
+            if (!this.data.animatedProducts[product.id]) {
+              this.setData({
+                [`animatedProducts.${product.id}`]: true
+              });
+            }
+          }, index * 80);
+        }
+      }).exec();
+    });
+  },
+
+  onPageScroll(e) {
+    const { menu, activeCat, animatedProducts } = this.data;
+    if (!menu.products || !menu.products[activeCat]) return;
+    
+    const products = menu.products[activeCat];
+    const windowHeight = wx.getSystemInfoSync().windowHeight;
+    const scrollTop = e.scrollTop;
+    
+    products.forEach((product) => {
+      if (animatedProducts[product.id]) return;
+      
+      const query = wx.createSelectorQuery();
+      query.select(`#product-${product.id}`).boundingClientRect((rect) => {
+        if (rect && rect.top - scrollTop < windowHeight) {
+          this.setData({
+            [`animatedProducts.${product.id}`]: true
+          });
+        }
+      }).exec();
+    });
+  },
+
+  onUnload() {
+    if (this.animationObserver) {
+      this.animationObserver.disconnect();
+    }
+    if (this.tapTimer) {
+      clearTimeout(this.tapTimer);
+    }
   },
 
   makePhoneCall() {

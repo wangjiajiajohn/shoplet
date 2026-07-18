@@ -32,7 +32,7 @@
   </view>
 
   <!-- 出摊状态卡 -->
-  <view class="status-card">
+  <view class="status-card animate-card {{animatedCards.status ? 'animated' : ''}}">
     <view class="status-top">
       <text class="status-label">今日出摊状态</text>
       <view class="seal {{info.status}}">
@@ -51,14 +51,14 @@
 
   <!-- 地点 / 时间 -->
   <view class="info-grid">
-    <view class="info-item info-loc" bindtap="openMap">
+    <view class="info-item info-loc animate-card {{animatedCards.loc ? 'animated animated-delay-1' : ''}}" bindtap="openMap">
       <text class="info-icon">📍</text>
       <text class="info-k">地点</text>
       <text class="info-v">{{info.location}}</text>
       <text class="info-sub">{{info.locationSub}}</text>
       <text class="info-arrow">›</text>
     </view>
-    <view class="info-item info-time">
+    <view class="info-item info-time animate-card {{animatedCards.time ? 'animated animated-delay-2' : ''}}">
       <text class="info-icon">🕔</text>
       <text class="info-k">时间</text>
       <text class="info-v">{{info.time}}</text>
@@ -77,7 +77,7 @@
   <view class="menu-container" wx:if="{{menu.categories && menu.categories.length > 0}}">
     <view wx:for="{{menu.categories}}" wx:for-item="cat" wx:key="id" 
           class="menu-group {{activeCat === cat.id ? 'menu-group-active' : 'menu-group-hidden'}}">
-      <view class="menu-item" wx:for="{{menu.products[cat.id]}}" wx:for-item="product" wx:key="id">
+      <view class="menu-item animate-card {{animatedProducts[product.id] ? 'animated' : ''}}" wx:for="{{menu.products[cat.id]}}" wx:for-item="product" wx:key="id" id="product-{{product.id}}">
           <view class="menu-thumb">
             <image wx:if="{{product.image}}" class="menu-thumb-img" src="{{product.image}}" mode="aspectFill"></image>
             <text wx:else class="menu-thumb-emoji">{{product.emoji}}</text>
