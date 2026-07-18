@@ -38,12 +38,43 @@
     0 8rpx 32rpx rgba(92,38,25,0.08),
     inset 0 1rpx 0 rgba(255,255,255,0.8);
 }
+.nav-center {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
 .nav-title {
   font-size: 36rpx;
   font-weight: 900;
   letter-spacing: 2rpx;
   color: #2A1810;
   text-shadow: 0 1rpx 2rpx rgba(255,255,255,0.5);
+}
+.nav-refresh {
+  width: 56rpx;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  transition: all 0.2s ease;
+}
+.nav-refresh:active {
+  background: rgba(180,85,46,0.2);
+  transform: scale(0.95);
+}
+.refresh-icon {
+  font-size: 28rpx;
+  color: #6B5644;
+  font-weight: 600;
+}
+.refresh-icon.loading {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 /* 消息滚动栏 */

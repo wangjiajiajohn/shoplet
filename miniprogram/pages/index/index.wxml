@@ -6,7 +6,12 @@
 
   <!-- 玻璃导航栏 -->
   <view class="nav-bar" style="padding-top:{{statusBarHeight}}px">
-    <text class="nav-title" bindtap="onTitleTap">{{info.title || '深夜食堂'}}</text>
+    <view class="nav-center">
+      <text class="nav-title" bindtap="onTitleTap">{{loading ? 'loading...' : (info.title || '深夜食堂')}}</text>
+      <view class="nav-refresh" bindtap="onRefresh">
+        <text class="refresh-icon {{loading ? 'loading' : ''}}">↻</text>
+      </view>
+    </view>
   </view>
 
   <!-- 消息滚动栏占位 -->

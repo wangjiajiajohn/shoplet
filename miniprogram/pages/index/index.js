@@ -96,6 +96,11 @@ Page({
     wx.navigateTo({ url: '/pages/admin/admin' });
   },
 
+  onRefresh() {
+    if (this.data.loading) return;
+    this.loadData();
+  },
+
   onShareAppMessage() {
     return {
       title: '有点晚拌川',
