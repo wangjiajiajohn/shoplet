@@ -13,7 +13,7 @@
   <view class="scroll-bar-placeholder" wx:if="{{info.announcement}}"></view>
   
   <!-- 消息滚动栏 -->
-  <view class="scroll-bar" wx:if="{{info.announcement}}" style="top:{{navBarHeight}}px">
+  <view class="scroll-bar" wx:if="{{info.announcement}}" style="top:{{navBarHeight + 8}}px">
     <text class="scroll-icon">📢</text>
     <view class="scroll-track">
       <text class="scroll-text">{{info.announcement}}</text>
@@ -56,7 +56,7 @@
   </view>
 
   <!-- 分类切换 -->
-  <view class="cat-switch-wrapper" wx:if="{{menu.categories && menu.categories.length > 0}}" style="top:{{navBarHeight}}px">
+  <view class="cat-switch-wrapper" wx:if="{{menu.categories && menu.categories.length > 0}}" style="top:{{navBarHeight + (info.announcement ? 46 : 8)}}px">
     <view class="cat-switch">
       <view class="cat-btn {{activeCat === cat.id ? 'active' : ''}}" wx:for="{{menu.categories}}" wx:for-item="cat" wx:key="id" data-cat="{{cat.id}}" bindtap="switchCat">{{cat.name}}</view>
     </view>

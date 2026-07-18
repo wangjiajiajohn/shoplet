@@ -264,8 +264,6 @@
 .cat-switch-wrapper {
   position: sticky;
   z-index: 50;
-  padding-top: 12rpx;
-  background: rgba(246,241,231,0.95);
 }
 .cat-switch {
   display: flex;
