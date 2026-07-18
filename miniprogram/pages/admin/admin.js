@@ -14,7 +14,8 @@ Page({
       note: '',
       announcement: '',
       lastResetDate: '',
-      phone: ''
+      phone: '',
+      qrcode: ''
     },
     menu: {},
     showCategoryModal: false,
@@ -133,6 +134,44 @@ Page({
   onPhoneInput(e) {
     const value = e.detail.value.replace(/[^\d]/g, '');
     this.setData({ 'form.phone': value });
+  },
+
+  async chooseQrcodeImage() {
+    try {
+      const res = await wx.chooseMedia({
+        count: 1,
+        mediaType: ['image'],
+        sizeType: ['compressed'],
+        sourceType: ['album', 'camera']
+      });
+
+      if (res.tempFiles && res.tempFiles.length > 0) {
+        const tempFile = res.tempFiles[0];
+        const fileName = 'qrcode/' + Date.now() + '_' + Math.random().toString(36).substr(2, 9) + '.jpg';
+
+        wx.showLoading({ title: '上传中...' });
+
+        const uploadRes = await wx.cloud.uploadFile({
+          cloudPath: fileName,
+          filePath: tempFile.tempFilePath
+        });
+
+        wx.hideLoading();
+
+        if (uploadRes.fileID) {
+          this.setData({ 'form.qrcode': uploadRes.fileID });
+          wx.showToast({ title: '上传成功', icon: 'success' });
+        }
+      }
+    } catch (error) {
+      console.error('上传二维码失败:', error);
+      wx.hideLoading();
+      wx.showToast({ title: '上传失败', icon: 'none' });
+    }
+  },
+
+  clearQrcodeImage() {
+    this.setData({ 'form.qrcode': '' });
   },
 
   async saveStallInfo() {

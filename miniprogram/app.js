@@ -20,7 +20,8 @@ App({
       note: '',
       announcement: '',
       lastResetDate: '',
-      phone: ''
+      phone: '',
+      qrcode: ''
     },
     menu: {
       categories: [],

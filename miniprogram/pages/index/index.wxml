@@ -107,6 +107,16 @@
     <text class="contact-arrow">›</text>
   </view>
 
+  <!-- 微信二维码 -->
+  <view wx:if="{{info.qrcode}}" class="qrcode-card">
+    <view class="qrcode-header">
+      <text class="qrcode-icon">💬</text>
+      <text class="qrcode-label">添加微信好友</text>
+    </view>
+    <image class="qrcode-image" src="{{info.qrcode}}" mode="aspectFit" show-menu-by-longpress="true" />
+    <text class="qrcode-hint">长按识别二维码添加好友</text>
+  </view>
+
   <text class="footer-note">灶火不熄 · 明天再见</text>
 
 </view>

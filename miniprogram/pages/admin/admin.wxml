@@ -152,6 +152,21 @@
       <input class="input-real" placeholder="输入联系电话" value="{{form.phone}}" bindinput="onPhoneInput" />
     </view>
 
+    <view class="field">
+      <text class="field-label">微信二维码</text>
+      <text class="field-hint">长按二维码图片添加好友</text>
+      <view class="image-upload-area" bindtap="chooseQrcodeImage">
+        <image wx:if="{{form.qrcode}}" class="upload-preview" src="{{form.qrcode}}" mode="aspectFill" />
+        <view wx:else class="upload-placeholder">
+          <text class="upload-icon">📷</text>
+          <text class="upload-text">点击上传二维码</text>
+        </view>
+      </view>
+      <view wx:if="{{form.qrcode}}" class="image-actions">
+        <text class="action-btn delete" bindtap="clearQrcodeImage">删除二维码</text>
+      </view>
+    </view>
+
     <button class="save-btn" bindtap="saveStallInfo">保存店铺设置</button>
   </view>
 
