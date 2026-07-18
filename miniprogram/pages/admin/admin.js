@@ -4,9 +4,11 @@ Page({
   data: {
     form: {
       status: 'not_started',
-      location: '文一西路口',
-      locationSub: '近电子科技大楼',
-      time: '17:30',
+      location: '',
+      locationSub: '',
+      latitude: null,
+      longitude: null,
+      time: '',
       timeSub: '',
       note: '',
       announcement: '',
@@ -28,30 +30,42 @@ Page({
       price: '',
       priceSuffix: '',
       emoji: '',
+      image: '',
       hot: false
     },
-    emojiOptions: ['🍜', '🥩', '🍖', '🥓', '🦐', '🍳', '🥤', '🍺', '💧', '🍵', '🥛', '🥬', '🐷', '🍞', '🍲', '🍔', '🍕', '🌭', '🍟', '🍿']
+    emojiOptions: ['🍜', '🥩', '🍖', '🥓', '🦐', '🍳', '🥤', '🍺', '💧', '🍵', '🥛', '🥬', '🐷', '🍞', '🍲', '🍔', '🍕', '🌭', '🍟', '🍿'],
+    loading: true
   },
 
-  onShow() {
-    const info = app.getStallInfo();
-    if (info.time && info.time.includes('–')) {
-      const match = info.time.match(/(\d{2}:\d{2})/);
-      if (match) {
-        info.time = match[1];
-        info.timeSub = '';
-        app.saveStallInfo(info);
+  async onShow() {
+    this.setData({ loading: true });
+    try {
+      let info = await app.getStallInfo();
+      if (info.time && info.time.includes('–')) {
+        const match = info.time.match(/(\d{2}:\d{2})/);
+        if (match) {
+          info.time = match[1];
+          info.timeSub = '';
+          await app.saveStallInfo(info);
+        }
       }
+      let menu = await app.getMenu();
+      if (!menu || !menu.categories || menu.categories.length === 0 || !menu.products) {
+        menu = app.globalData.menu;
+        await app.saveMenu(menu);
+      }
+      if (!menu.products) {
+        menu.products = {};
+      }
+      this.setData({ 
+        form: info,
+        menu: menu,
+        loading: false
+      });
+    } catch (error) {
+      console.error('加载数据失败:', error);
+      this.setData({ loading: false });
     }
-    let menu = app.getMenu();
-    if (!menu || !menu.categories || menu.categories.length === 0 || !menu.products) {
-      menu = app.globalData.menu;
-      app.saveMenu(menu);
-    }
-    this.setData({ 
-      form: info,
-      menu: menu
-    });
   },
 
   setStatus(e) {
@@ -97,17 +111,22 @@ Page({
     this.setData({ 'form.announcement': e.detail.value });
   },
 
-  saveInfo() {
-    app.saveStallInfo(this.data.form);
-    app.saveMenu(this.data.menu);
-    wx.showToast({
-      title: '已发布给顾客',
-      icon: 'success',
-      duration: 1500
-    });
-    setTimeout(() => {
-      wx.navigateBack();
-    }, 900);
+  async saveInfo() {
+    try {
+      await app.saveStallInfo(this.data.form);
+      await app.saveMenu(this.data.menu);
+      wx.showToast({
+        title: '已发布给顾客',
+        icon: 'success',
+        duration: 1500
+      });
+      setTimeout(() => {
+        wx.navigateBack();
+      }, 900);
+    } catch (error) {
+      console.error('保存失败:', error);
+      wx.showToast({ title: '保存失败', icon: 'none' });
+    }
   },
 
   showAddCategoryModal() {
@@ -192,7 +211,7 @@ Page({
       showProductModal: true,
       editingProduct: null,
       currentCategoryId: categoryId,
-      productForm: { name: '', desc: '', price: '', priceSuffix: '', emoji: '', hot: false }
+      productForm: { name: '', desc: '', price: '', priceSuffix: '', emoji: '', image: '', hot: false }
     });
   },
 
@@ -210,6 +229,7 @@ Page({
           price: product.price,
           priceSuffix: product.priceSuffix || '',
           emoji: product.emoji,
+          image: product.image || '',
           hot: product.hot || false
         }
       });
@@ -244,18 +264,52 @@ Page({
     this.setData({ 'productForm.hot': !this.data.productForm.hot });
   },
 
+  async chooseProductImage() {
+    try {
+      const res = await wx.chooseMedia({
+        count: 1,
+        mediaType: ['image'],
+        sizeType: ['compressed'],
+        sourceType: ['album', 'camera']
+      });
+      
+      if (res.tempFiles && res.tempFiles.length > 0) {
+        const tempFile = res.tempFiles[0];
+        const fileName = `products/${Date.now()}_${Math.random().toString(36).substr(2, 9)}.jpg`;
+        
+        wx.showLoading({ title: '上传中...' });
+        
+        const uploadRes = await wx.cloud.uploadFile({
+          cloudPath: fileName,
+          filePath: tempFile.tempFilePath
+        });
+        
+        wx.hideLoading();
+        
+        if (uploadRes.fileID) {
+          this.setData({ 'productForm.image': uploadRes.fileID });
+          wx.showToast({ title: '上传成功', icon: 'success' });
+        }
+      }
+    } catch (error) {
+      console.error('上传图片失败:', error);
+      wx.hideLoading();
+      wx.showToast({ title: '上传失败', icon: 'none' });
+    }
+  },
+
+  clearProductImage() {
+    this.setData({ 'productForm.image': '' });
+  },
+
   saveProduct() {
-    const { name, price, emoji } = this.data.productForm;
+    const { name, price } = this.data.productForm;
     if (!name.trim()) {
       wx.showToast({ title: '请输入商品名称', icon: 'none' });
       return;
     }
     if (!price.trim()) {
       wx.showToast({ title: '请输入价格', icon: 'none' });
-      return;
-    }
-    if (!emoji) {
-      wx.showToast({ title: '请选择商品图标', icon: 'none' });
       return;
     }
 

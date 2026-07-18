@@ -1,6 +1,7 @@
 {
   "description": "有点晚拌川 - 出摊小程序",
   "miniprogramRoot": "miniprogram/",
+  "cloudfunctionRoot": "cloudfunctions/",
   "packOptions": {
     "ignore": [],
     "include": []
@@ -12,11 +13,18 @@
     "postcss": true,
     "minified": true,
     "newFeature": true,
-    "bigPackageSizeSupport": true
+    "bigPackageSizeSupport": true,
+    "cloud": true,
+    "packNpmManually": false,
+    "packNpmRelationList": []
   },
   "compileType": "miniprogram",
   "libVersion": "trial",
-  "appid": "touristappid",
+  "appid": "wx968b481f3ae78c98",
   "projectname": "youdianwan-banchuan",
-  "condition": {}
+  "condition": {},
+  "cloud": true,
+  "envList": [
+    "cloudbase-9gew065646c34e6f"
+  ]
 }

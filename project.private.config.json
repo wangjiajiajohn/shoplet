@@ -1,0 +1,17 @@
+{
+  "setting": {},
+  "compileType": "miniprogram",
+  "libVersion": "trial",
+  "appid": "wx968b481f3ae78c98",
+  "projectname": "youdianwan-banchuan",
+  "condition": {},
+  "cloud": true,
+  "setting": {
+    "urlCheck": false
+  },
+  "cloudfunctionRoot": "cloudfunctions/",
+  "miniprogramRoot": "miniprogram/",
+  "envList": [
+    "cloudbase-9gew065646c34e6f"
+  ]
+}

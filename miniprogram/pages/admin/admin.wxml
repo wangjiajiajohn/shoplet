@@ -73,7 +73,8 @@
         </view>
         <view class="product-list">
           <view class="product-item" wx:for="{{menu.products[category.id]}}" wx:for-item="product" wx:key="id">
-            <text class="product-emoji">{{product.emoji}}</text>
+            <image wx:if="{{product.image}}" class="product-image" src="{{product.image}}" mode="aspectFill" />
+            <text wx:else class="product-emoji">{{product.emoji}}</text>
             <view class="product-info">
               <text class="product-name">{{product.name}}</text>
               <text class="product-price">{{product.price}}</text>
@@ -134,11 +135,17 @@
         <input class="modal-input" placeholder="例如：/份" value="{{productForm.priceSuffix}}" bindinput="onProductPriceSuffixInput" />
       </view>
       <view class="modal-field">
-        <text class="modal-label">商品图标</text>
-        <view class="emoji-picker">
-          <text class="emoji-option" wx:for="{{emojiOptions}}" wx:key="*this" bindtap="selectProductEmoji" data-emoji="{{item}}">{{item}}</text>
+        <text class="modal-label">商品图片</text>
+        <view class="image-upload-area" bindtap="chooseProductImage">
+          <image wx:if="{{productForm.image}}" class="upload-preview" src="{{productForm.image}}" mode="aspectFill" />
+          <view wx:else class="upload-placeholder">
+            <text class="upload-icon">📷</text>
+            <text class="upload-text">点击上传图片</text>
+          </view>
         </view>
-        <text class="selected-emoji">{{productForm.emoji}}</text>
+        <view wx:if="{{productForm.image}}" class="image-actions">
+          <text class="action-btn delete" bindtap="clearProductImage">删除图片</text>
+        </view>
       </view>
       <view class="modal-field">
         <text class="modal-label">招牌标记</text>

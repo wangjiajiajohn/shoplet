@@ -25,15 +25,15 @@
     <view class="status-top">
       <text class="status-label">今日出摊状态</text>
       <view class="seal {{info.status}}">
-        <text>{{info.status === 'started' ? '营业中' : info.status === 'closed' ? '已收摊' : '未出摊'}}</text>
+        <text>{{info.status === 'started' ? '营业中' : info.status === 'ended' ? '已收摊' : '未出摊'}}</text>
       </view>
     </view>
     <view class="status-headline">
       <view class="dot {{info.status}}"></view>
-      <text class="headline-text">{{info.status === 'started' ? '营业中' : info.status === 'closed' ? '已收摊' : '今日尚未出摊'}}</text>
+      <text class="headline-text">{{info.status === 'started' ? '营业中' : info.status === 'ended' ? '已收摊' : '今日尚未出摊'}}</text>
     </view>
     <text class="status-desc">
-      {{info.status === 'started' ? '老板已经支好摊子，铁锅正热着 —— 现在过去，拌川管够。' : info.status === 'closed' ? '老板已经收摊了，明天早点来～' : '老板还没出摊，记得关注出摊时间哦～'}}
+      {{info.status === 'started' ? '老板已经支好摊子，铁锅正热着 —— 现在过去，拌川管够。' : info.status === 'ended' ? '老板已经收摊了，明天早点来～' : '老板还没出摊，记得关注出摊时间哦～'}}
     </text>
     <text wx:if="{{info.note}}" class="status-note">💬 {{info.note}}</text>
   </view>
@@ -56,68 +56,28 @@
   </view>
 
   <!-- 分类切换 -->
-  <view class="cat-switch" style="top:{{navBarHeight + (info.announcement ? 56 : 0)}}px">
-    <view class="cat-btn {{activeCat === 'banchuan' ? 'active' : ''}}" data-cat="banchuan" bindtap="switchCat">拌川</view>
-    <view class="cat-btn {{activeCat === 'topping' ? 'active' : ''}}" data-cat="topping" bindtap="switchCat">浇头</view>
-    <view class="cat-btn {{activeCat === 'drink' ? 'active' : ''}}" data-cat="drink" bindtap="switchCat">饮品</view>
-  </view>
-
-  <!-- 拌川列表 -->
-  <view class="menu-group" wx:if="{{activeCat === 'banchuan'}}">
-    <view class="menu-item" wx:for="{{menuBanchuan}}" wx:key="name">
-      <view class="menu-thumb" style="background:{{item.bg}}">
-        <image wx:if="{{item.image}}" class="menu-thumb-img" src="{{item.image}}" mode="aspectFill" />
-        <text wx:else class="menu-thumb-emoji">{{item.emoji}}</text>
-        <text wx:if="{{item.hot}}" class="hot-tag">招牌</text>
-      </view>
-      <view class="menu-content">
-        <view class="menu-body">
-          <text class="menu-name">{{item.name}}</text>
-          <text class="menu-desc">{{item.desc}}</text>
-        </view>
-        <view class="menu-price-box">
-          <text class="menu-price">{{item.price}}</text>
-          <text wx:if="{{item.priceSuffix}}" class="menu-price-sub">{{item.priceSuffix}}</text>
-        </view>
-      </view>
+  <view class="cat-switch-wrapper">
+    <view class="cat-switch">
+      <view class="cat-btn {{activeCat === cat.id ? 'active' : ''}}" wx:for="{{menu.categories}}" wx:for-item="cat" wx:key="id" data-cat="{{cat.id}}" bindtap="switchCat">{{cat.name}}</view>
     </view>
   </view>
 
-  <!-- 浇头列表 -->
-  <view class="menu-group" wx:if="{{activeCat === 'topping'}}">
-    <view class="menu-item" wx:for="{{menuTopping}}" wx:key="name">
-      <view class="menu-thumb" style="background:{{item.bg}}">
-        <image wx:if="{{item.image}}" class="menu-thumb-img" src="{{item.image}}" mode="aspectFill" />
-        <text wx:else class="menu-thumb-emoji">{{item.emoji}}</text>
-        <text wx:if="{{item.hot}}" class="hot-tag">招牌</text>
-      </view>
+  <!-- 商品列表 -->
+  <view class="menu-group">
+    <view class="menu-item" wx:for="{{menu.products[activeCat]}}" wx:for-item="product" wx:key="id">
+        <view class="menu-thumb">
+          <image wx:if="{{product.image}}" class="menu-thumb-img" src="{{product.image}}" mode="aspectFill" />
+          <text wx:else class="menu-thumb-emoji">{{product.emoji}}</text>
+          <text wx:if="{{product.hot}}" class="hot-tag">招牌</text>
+        </view>
       <view class="menu-content">
         <view class="menu-body">
-          <text class="menu-name">{{item.name}}</text>
-          <text class="menu-desc">{{item.desc}}</text>
+          <text class="menu-name">{{product.name}}</text>
+          <text class="menu-desc">{{product.desc}}</text>
         </view>
         <view class="menu-price-box">
-          <text class="menu-price">{{item.price}}</text>
-          <text wx:if="{{item.priceSuffix}}" class="menu-price-sub">{{item.priceSuffix}}</text>
-        </view>
-      </view>
-    </view>
-  </view>
-
-  <!-- 饮品列表 -->
-  <view class="menu-group" wx:if="{{activeCat === 'drink'}}">
-    <view class="menu-item" wx:for="{{menuDrink}}" wx:key="name">
-      <view class="menu-thumb" style="background:{{item.bg}}">
-        <image wx:if="{{item.image}}" class="menu-thumb-img" src="{{item.image}}" mode="aspectFill" />
-        <text wx:else class="menu-thumb-emoji">{{item.emoji}}</text>
-      </view>
-      <view class="menu-content">
-        <view class="menu-body">
-          <text class="menu-name">{{item.name}}</text>
-          <text class="menu-desc">{{item.desc}}</text>
-        </view>
-        <view class="menu-price-box">
-          <text class="menu-price">{{item.price}}</text>
+          <text class="menu-price">{{product.price}}</text>
+          <text wx:if="{{product.priceSuffix}}" class="menu-price-sub">{{product.priceSuffix}}</text>
         </view>
       </view>
     </view>
