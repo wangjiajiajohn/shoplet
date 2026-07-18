@@ -174,6 +174,13 @@
         </view>
       </view>
       <view class="modal-field">
+        <text class="modal-label">商品图标（无图片时显示）</text>
+        <view class="emoji-picker">
+          <text class="emoji-option" wx:for="{{emojiOptions}}" wx:key="*this" bindtap="selectProductEmoji" data-emoji="{{item}}">{{item}}</text>
+        </view>
+        <text wx:if="{{productForm.emoji}}" class="selected-emoji">{{productForm.emoji}}</text>
+      </view>
+      <view class="modal-field">
         <text class="modal-label">招牌标记</text>
         <view class="toggle-row small">
           <view class="toggle-opt {{!productForm.hot ? 'sel' : ''}}" bindtap="toggleProductHot">否</view>
