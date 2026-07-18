@@ -56,14 +56,14 @@
   </view>
 
   <!-- 分类切换 -->
-  <view class="cat-switch-wrapper">
+  <view class="cat-switch-wrapper" wx:if="{{menu.categories && menu.categories.length > 0}}">
     <view class="cat-switch">
       <view class="cat-btn {{activeCat === cat.id ? 'active' : ''}}" wx:for="{{menu.categories}}" wx:for-item="cat" wx:key="id" data-cat="{{cat.id}}" bindtap="switchCat">{{cat.name}}</view>
     </view>
   </view>
 
   <!-- 商品列表 -->
-  <view class="menu-group">
+  <view class="menu-group" wx:if="{{menu.categories && menu.categories.length > 0 && menu.products[activeCat] && menu.products[activeCat].length > 0}}">
     <view class="menu-item" wx:for="{{menu.products[activeCat]}}" wx:for-item="product" wx:key="id">
         <view class="menu-thumb">
           <image wx:if="{{product.image}}" class="menu-thumb-img" src="{{product.image}}" mode="aspectFill" />
@@ -81,6 +81,13 @@
         </view>
       </view>
     </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{!menu.categories || menu.categories.length === 0}}">
+    <text class="empty-icon">🍜</text>
+    <text class="empty-text">老板正在准备菜单...</text>
+    <text class="empty-subtext">点击标题5次进入设置</text>
   </view>
 
   <text class="footer-note">灶火不熄 · 明天再见</text>
