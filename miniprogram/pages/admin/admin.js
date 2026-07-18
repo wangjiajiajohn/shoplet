@@ -81,9 +81,13 @@ Page({
       'form.latitude': parseFloat(lat),
       'form.longitude': parseFloat(lng)
     });
+    // 选择位置后立即保存到云端
+    app.saveStallInfo(this.data.form).catch(err => {
+      console.error('保存位置失败:', err);
+    });
   },
 
-  chooseLocation() {
+  async chooseLocation() {
     wx.chooseLocation({
       success: (res) => {
         this.setData({
@@ -91,6 +95,10 @@ Page({
           'form.locationSub': res.name ? res.address : '',
           'form.latitude': res.latitude,
           'form.longitude': res.longitude
+        });
+        // 选择位置后立即保存到云端
+        app.saveStallInfo(this.data.form).catch(err => {
+          console.error('保存位置失败:', err);
         });
       },
       fail: () => {
