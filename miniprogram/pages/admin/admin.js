@@ -121,6 +121,10 @@ Page({
     this.setData({ 'form.note': e.detail.value });
   },
 
+  onTitleInput(e) {
+    this.setData({ 'form.title': e.detail.value });
+  },
+
   onAnnouncementInput(e) {
     this.setData({ 'form.announcement': e.detail.value });
   },

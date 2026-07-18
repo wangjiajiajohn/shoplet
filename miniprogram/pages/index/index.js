@@ -94,5 +94,21 @@ Page({
 
   goAdmin() {
     wx.navigateTo({ url: '/pages/admin/admin' });
+  },
+
+  onShareAppMessage() {
+    return {
+      title: '有点晚拌川',
+      desc: '老板已经支好摊子，铁锅正热着 —— 现在过去，拌川管够。',
+      path: '/pages/index/index'
+    };
+  },
+
+  onShareTimeline() {
+    return {
+      title: '有点晚拌川',
+      query: '',
+      imageUrl: ''
+    };
   }
 });

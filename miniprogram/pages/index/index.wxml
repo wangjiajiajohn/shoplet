@@ -6,7 +6,7 @@
 
   <!-- 玻璃导航栏 -->
   <view class="nav-bar" style="padding-top:{{statusBarHeight}}px">
-    <text class="nav-title" bindtap="onTitleTap">有点晚拌川</text>
+    <text class="nav-title" bindtap="onTitleTap">{{info.title || '深夜食堂'}}</text>
   </view>
 
   <!-- 消息滚动栏占位 -->
