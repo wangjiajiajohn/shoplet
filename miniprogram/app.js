@@ -69,16 +69,29 @@ App({
     }
   },
 
-  checkDailyReset() {
-    const info = this.globalData.stallInfo
+  async checkDailyReset() {
     const today = new Date().toDateString()
     
-    if (info.lastResetDate !== today) {
-      const hour = new Date().getHours()
-      if (hour >= 6) {
-        info.status = 'not_started'
-        info.lastResetDate = today
-        this.saveStallInfo(info)
+    if (this.globalData.dbReady) {
+      try {
+        const db = wx.cloud.database()
+        const res = await db.collection('stallInfo').get()
+        if (res.data.length > 0) {
+          const info = res.data[0]
+          if (info.lastResetDate !== today) {
+            const hour = new Date().getHours()
+            if (hour >= 6) {
+              info.status = 'not_started'
+              info.lastResetDate = today
+              const cleaned = this.cleanData(info)
+              await db.collection('stallInfo').doc(info._id).update({
+                data: cleaned
+              })
+            }
+          }
+        }
+      } catch (error) {
+        console.error('每日重置失败:', error)
       }
     }
   },

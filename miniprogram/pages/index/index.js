@@ -26,7 +26,7 @@ Page({
   },
 
   async onShow() {
-    app.checkDailyReset();
+    await app.checkDailyReset();
     await this.loadData();
   },
 
