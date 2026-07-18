@@ -11,6 +11,9 @@
     <view class="tab-item {{activeTab === 'menu' ? 'active' : ''}}" bindtap="switchTab" data-tab="menu">
       商品管理
     </view>
+    <view class="tab-item {{activeTab === 'shop' ? 'active' : ''}}" bindtap="switchTab" data-tab="shop">
+      店铺设置
+    </view>
   </view>
   <view class="tab-placeholder"></view>
 
@@ -18,12 +21,6 @@
   <view wx:if="{{activeTab === 'daily'}}" class="tab-content">
     <text class="panel-title">今日出摊设置</text>
     <text class="panel-sub">改完点保存，顾客端立即更新</text>
-
-    <!-- 店铺名称 -->
-    <view class="field">
-      <text class="field-label">店铺名称</text>
-      <input class="input-real" placeholder="输入店铺名称" value="{{form.title}}" bindinput="onTitleInput" />
-    </view>
 
     <!-- 营业状态 -->
     <view class="field">
@@ -138,6 +135,24 @@
         <button class="modal-btn confirm" bindtap="saveCategory">保存</button>
       </view>
     </view>
+  </view>
+
+  <!-- 店铺设置内容 -->
+  <view wx:if="{{activeTab === 'shop'}}" class="tab-content">
+    <text class="panel-title">店铺设置</text>
+    <text class="panel-sub">配置店铺基础信息</text>
+
+    <view class="field">
+      <text class="field-label">店铺名称</text>
+      <input class="input-real" placeholder="输入店铺名称" value="{{form.title}}" bindinput="onTitleInput" />
+    </view>
+
+    <view class="field">
+      <text class="field-label">联系电话</text>
+      <input class="input-real" placeholder="输入联系电话" value="{{form.phone}}" bindinput="onPhoneInput" />
+    </view>
+
+    <button class="save-btn" bindtap="saveStallInfo">保存店铺设置</button>
   </view>
 
   <!-- 添加商品弹窗 -->

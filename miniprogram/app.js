@@ -19,7 +19,8 @@ App({
       timeSub: '',
       note: '',
       announcement: '',
-      lastResetDate: ''
+      lastResetDate: '',
+      phone: ''
     },
     menu: {
       categories: [],

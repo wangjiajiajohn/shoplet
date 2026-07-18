@@ -96,6 +96,17 @@ Page({
     wx.navigateTo({ url: '/pages/admin/admin' });
   },
 
+  makePhoneCall() {
+    const phone = this.data.info.phone;
+    if (!phone) return;
+    wx.makePhoneCall({
+      phoneNumber: phone,
+      fail: () => {
+        wx.showToast({ title: '拨打电话失败', icon: 'none' });
+      }
+    });
+  },
+
   onRefresh() {
     if (this.data.loading) return;
     this.loadData();

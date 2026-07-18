@@ -97,6 +97,16 @@
     <text class="empty-text">老板正在准备菜单...</text>
   </view>
 
+  <!-- 联系人区域 -->
+  <view wx:if="{{info.phone}}" class="contact-card" bindtap="makePhoneCall">
+    <view class="contact-icon">📞</view>
+    <view class="contact-info">
+      <text class="contact-label">联系老板</text>
+      <text class="contact-phone">{{info.phone}}</text>
+    </view>
+    <text class="contact-arrow">›</text>
+  </view>
+
   <text class="footer-note">灶火不熄 · 明天再见</text>
 
 </view>

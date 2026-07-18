@@ -13,7 +13,8 @@ Page({
       timeSub: '',
       note: '',
       announcement: '',
-      lastResetDate: ''
+      lastResetDate: '',
+      phone: ''
     },
     menu: {},
     showCategoryModal: false,
@@ -127,6 +128,11 @@ Page({
 
   onAnnouncementInput(e) {
     this.setData({ 'form.announcement': e.detail.value });
+  },
+
+  onPhoneInput(e) {
+    const value = e.detail.value.replace(/[^\d]/g, '');
+    this.setData({ 'form.phone': value });
   },
 
   async saveStallInfo() {
