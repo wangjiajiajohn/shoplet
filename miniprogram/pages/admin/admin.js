@@ -133,6 +133,9 @@ Page({
         icon: 'success',
         duration: 1500
       });
+      setTimeout(() => {
+        wx.navigateBack();
+      }, 1500);
     } catch (error) {
       console.error('保存失败:', error);
       wx.showToast({ title: '保存失败', icon: 'none' });

@@ -15,17 +15,22 @@
 .blob-2 { width: 340rpx; height: 340rpx; bottom: 280rpx; right: -130rpx; background: rgba(90, 130, 80, 0.35); }
 
 .tab-wrapper {
-  position: relative;
-  z-index: 1;
+  position: fixed;
+  top: calc(var(--status-bar-height) + 44px);
+  left: 28rpx;
+  right: 28rpx;
+  z-index: 100;
   display: flex;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(246, 241, 231, 0.95);
   backdrop-filter: blur(30rpx) saturate(180%);
   -webkit-backdrop-filter: blur(30rpx) saturate(180%);
   border: 1rpx solid rgba(255, 255, 255, 0.6);
   box-shadow: 0 10rpx 26rpx rgba(92, 38, 25, 0.1);
   border-radius: 28rpx;
   padding: 8rpx;
-  margin-bottom: 32rpx;
+}
+.tab-placeholder {
+  height: 120rpx;
 }
 .tab-item {
   flex: 1;

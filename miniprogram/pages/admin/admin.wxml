@@ -12,6 +12,7 @@
       商品管理
     </view>
   </view>
+  <view class="tab-placeholder"></view>
 
   <!-- 每日设置内容 -->
   <view wx:if="{{activeTab === 'daily'}}" class="tab-content">
