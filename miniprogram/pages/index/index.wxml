@@ -98,7 +98,7 @@
   </view>
 
   <!-- 联系人区域 -->
-  <view wx:if="{{info.phone}}" class="contact-card" bindtap="makePhoneCall">
+  <view wx:if="{{false}}" class="contact-card" bindtap="makePhoneCall">
     <view class="contact-icon">📞</view>
     <view class="contact-info">
       <text class="contact-label">联系老板</text>
