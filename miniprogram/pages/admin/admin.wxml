@@ -2,6 +2,7 @@
 
   <view class="blob blob-1"></view>
   <view class="blob blob-2"></view>
+  <view class="blob blob-3"></view>
 
   <!-- Tab切换 -->
   <view class="tab-wrapper">

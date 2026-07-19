@@ -3,6 +3,7 @@
   <view class="blob blob-1"></view>
   <view class="blob blob-2"></view>
   <view class="blob blob-3"></view>
+  <view class="blob blob-4"></view>
 
   <!-- 玻璃导航栏 -->
   <view class="nav-bar" style="padding-top:{{statusBarHeight}}px">

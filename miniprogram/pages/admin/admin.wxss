@@ -2,18 +2,88 @@
   position: relative;
   padding: 32rpx 28rpx 60rpx;
   min-height: 100vh;
+  background: #FFFFFF;
 }
 
+/* ========== Liquid Glass Token System - iOS 26 Style ========== */
+.glass-light {
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(40rpx);
+  -webkit-backdrop-filter: blur(40rpx);
+  border: 1rpx solid rgba(255,255,255,0.5);
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.04), inset 0 1rpx 0 rgba(255,255,255,0.8);
+}
+
+.glass-medium {
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(60rpx);
+  -webkit-backdrop-filter: blur(60rpx);
+  border: 1rpx solid rgba(255,255,255,0.6);
+  box-shadow: 0 12rpx 32rpx rgba(0,0,0,0.06), inset 0 1rpx 0 rgba(255,255,255,0.85);
+}
+
+.glass-strong {
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(80rpx);
+  -webkit-backdrop-filter: blur(80rpx);
+  border: 1rpx solid rgba(255,255,255,0.75);
+  box-shadow: 0 16rpx 48rpx rgba(0,0,0,0.08), inset 0 1rpx 0 rgba(255,255,255,0.9);
+}
+
+.radius-sm { border-radius: 20rpx; }
+.radius-md { border-radius: 32rpx; }
+.radius-lg { border-radius: 48rpx; }
+
+/* ========== 动态背景光斑 ========== */
 .blob {
   position: fixed;
   border-radius: 50%;
-  filter: blur(80rpx);
+  filter: blur(160rpx);
   z-index: 0;
   pointer-events: none;
 }
-.blob-1 { width: 460rpx; height: 460rpx; top: -140rpx; left: -120rpx; background: rgba(255, 168, 96, 0.6); }
-.blob-2 { width: 340rpx; height: 340rpx; bottom: 280rpx; right: -130rpx; background: rgba(90, 130, 80, 0.35); }
+.blob-1 { 
+  width: 800rpx; 
+  height: 800rpx; 
+  top: -200rpx; 
+  left: -200rpx; 
+  background: rgba(255, 180, 120, 0.5);
+  animation: blob-move-1 20s ease-in-out infinite;
+}
+.blob-2 { 
+  width: 700rpx; 
+  height: 700rpx; 
+  bottom: -150rpx; 
+  right: -180rpx; 
+  background: rgba(120, 200, 160, 0.45);
+  animation: blob-move-2 25s ease-in-out infinite;
+}
+.blob-3 { 
+  width: 600rpx; 
+  height: 600rpx; 
+  top: 400rpx; 
+  left: 100rpx; 
+  background: rgba(220, 140, 180, 0.35);
+  animation: blob-move-3 30s ease-in-out infinite;
+}
 
+@keyframes blob-move-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-40rpx, 60rpx) scale(1.1); }
+  66% { transform: translate(40rpx, -40rpx) scale(0.9); }
+}
+@keyframes blob-move-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(60rpx, -40rpx) scale(0.95); }
+  66% { transform: translate(-40rpx, 80rpx) scale(1.05); }
+}
+@keyframes blob-move-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-60rpx, -60rpx) scale(1.05); }
+  66% { transform: translate(40rpx, 40rpx) scale(0.95); }
+}
+
+/* ========== Tab切换 —— 果冻胶囊动效 ========== */
 .tab-wrapper {
   position: fixed;
   top: calc(var(--status-bar-height) + 44px);
@@ -22,13 +92,13 @@
   z-index: 100;
   display: flex;
   position: relative;
-  background: rgba(255,255,255,0.55);
-  backdrop-filter: blur(40rpx) saturate(180%);
-  -webkit-backdrop-filter: blur(40rpx) saturate(180%);
-  border: 1rpx solid rgba(255,255,255,0.7);
-  border-radius: 28rpx;
+  background: rgba(255,255,255,0.3);
+  backdrop-filter: blur(60rpx);
+  -webkit-backdrop-filter: blur(60rpx);
+  border: 1rpx solid rgba(255,255,255,0.5);
+  border-radius: 32rpx;
   padding: 8rpx;
-  box-shadow: 0 10rpx 26rpx rgba(92,38,25,0.12);
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.04), inset 0 1rpx 0 rgba(255,255,255,0.8);
 }
 .tab-bg {
   position: absolute;
@@ -36,9 +106,9 @@
   left: 8rpx;
   height: calc(100% - 16rpx);
   width: calc(33.33% - 5rpx);
-  background: rgba(255,255,255,0.9);
-  border-radius: 22rpx;
-  box-shadow: 0 6rpx 18rpx rgba(92,38,25,0.15);
+  background: #FFFFFF;
+  border-radius: 28rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08);
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .tab-placeholder {
@@ -49,14 +119,14 @@
   flex: 1;
   text-align: center;
   padding: 20rpx;
-  border-radius: 22rpx;
+  border-radius: 28rpx;
   font-size: 28rpx;
-  font-weight: 700;
-  color: #6b5644;
+  font-weight: 600;
+  color: #666666;
   transition: color 0.2s ease;
 }
 .tab-item.active {
-  color: #b4552e;
+  color: #B4552E;
 }
 
 .tab-content {
@@ -68,18 +138,17 @@
   position: relative;
   z-index: 1;
   display: block;
-  font-size: 38rpx;
+  font-size: 42rpx;
   font-weight: 700;
-  color: #2A1810;
+  color: #1A1A1A;
   margin-bottom: 8rpx;
-  text-shadow: 0 1rpx 2rpx rgba(255, 255, 255, 0.4);
 }
 .panel-sub {
   position: relative;
   z-index: 1;
   display: block;
   font-size: 22rpx;
-  color: #6b5644;
+  color: #888888;
   margin-bottom: 40rpx;
 }
 
@@ -91,36 +160,36 @@
 .field-label {
   display: block;
   font-size: 22rpx;
-  color: #6b5644;
+  color: #888888;
   margin-bottom: 8rpx;
   letter-spacing: 2rpx;
 }
 .field-hint {
   display: block;
   font-size: 20rpx;
-  color: #9a8b78;
+  color: #AAAAAA;
   margin-bottom: 12rpx;
 }
 
-/* 营业状态切换 —— 玻璃分段控件 */
+/* ========== 营业状态切换 —— 玻璃分段控件 ========== */
 .toggle-row {
   display: flex;
-  background: rgba(255,255,255,0.4);
-  backdrop-filter: blur(30rpx) saturate(180%);
-  -webkit-backdrop-filter: blur(30rpx) saturate(180%);
-  border: 1rpx solid rgba(255,255,255,0.6);
-  box-shadow: 0 10rpx 26rpx rgba(92,38,25,0.1);
-  border-radius: 28rpx;
+  background: rgba(255,255,255,0.3);
+  backdrop-filter: blur(40rpx);
+  -webkit-backdrop-filter: blur(40rpx);
+  border: 1rpx solid rgba(255,255,255,0.5);
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.04), inset 0 1rpx 0 rgba(255,255,255,0.8);
+  border-radius: 32rpx;
   padding: 8rpx;
 }
 .toggle-opt {
   flex: 1;
   text-align: center;
   padding: 20rpx;
-  border-radius: 22rpx;
+  border-radius: 28rpx;
   font-size: 26rpx;
   font-weight: 600;
-  color: #6b5644;
+  color: #666666;
   transition: all 0.2s ease;
 }
 .toggle-opt.sel {
@@ -129,17 +198,17 @@
   box-shadow: 0 6rpx 18rpx rgba(79,122,74,0.3);
 }
 
-/* 输入展示框 */
+/* ========== 输入展示框 ========== */
 .input-fake {
-  background: rgba(255,255,255,0.4);
-  backdrop-filter: blur(30rpx) saturate(180%);
-  -webkit-backdrop-filter: blur(30rpx) saturate(180%);
-  border: 1rpx solid rgba(255,255,255,0.6);
-  box-shadow: 0 10rpx 26rpx rgba(92,38,25,0.1), inset 0 1rpx 0 rgba(255,255,255,0.85);
-  border-radius: 24rpx;
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(60rpx);
+  -webkit-backdrop-filter: blur(60rpx);
+  border: 1rpx solid rgba(255,255,255,0.5);
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.04), inset 0 1rpx 0 rgba(255,255,255,0.85);
+  border-radius: 32rpx;
   padding: 26rpx 28rpx;
   font-size: 28rpx;
-  color: #2a1810;
+  color: #1A1A1A;
 }
 .loc-picker {
   display: flex;
@@ -148,23 +217,23 @@
   cursor: pointer;
 }
 .loc-picker:active {
-  background: rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.5);
 }
 .loc-arrow {
   font-size: 32rpx;
-  color: #8a6f5c;
+  color: #888888;
   font-weight: 300;
 }
 .input-real {
-  background: rgba(255,255,255,0.4);
-  backdrop-filter: blur(30rpx) saturate(180%);
-  -webkit-backdrop-filter: blur(30rpx) saturate(180%);
-  border: 1rpx solid rgba(255,255,255,0.6);
-  box-shadow: 0 10rpx 26rpx rgba(92,38,25,0.1), inset 0 1rpx 0 rgba(255,255,255,0.85);
-  border-radius: 24rpx;
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(60rpx);
+  -webkit-backdrop-filter: blur(60rpx);
+  border: 1rpx solid rgba(255,255,255,0.5);
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.04), inset 0 1rpx 0 rgba(255,255,255,0.85);
+  border-radius: 32rpx;
   padding: 26rpx 28rpx;
   font-size: 26rpx;
-  color: #2a1810;
+  color: #1A1A1A;
 }
 
 .preset-row {
@@ -177,10 +246,10 @@
   font-size: 22rpx;
   padding: 14rpx 22rpx;
   border-radius: 30rpx;
-  background: rgba(255,255,255,0.35);
-  backdrop-filter: blur(20rpx);
+  background: rgba(255,255,255,0.3);
+  backdrop-filter: blur(30rpx);
   border: 1rpx solid rgba(255,255,255,0.5);
-  color: #6b5644;
+  color: #666666;
 }
 .preset.sel {
   border-color: rgba(224,138,60,0.9);
@@ -188,22 +257,23 @@
   background: rgba(224,138,60,0.15);
 }
 
+/* ========== 保存按钮 ========== */
 .save-btn {
   position: relative;
   z-index: 1;
   width: 100%;
   background: rgba(180,85,46,0.92);
-  backdrop-filter: blur(30rpx) saturate(180%);
-  -webkit-backdrop-filter: blur(30rpx) saturate(180%);
+  backdrop-filter: blur(30rpx);
+  -webkit-backdrop-filter: blur(30rpx);
   border: 1rpx solid rgba(255,255,255,0.3);
   color: #ffffff;
   font-size: 30rpx;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 4rpx;
   padding: 24rpx 0;
-  border-radius: 28rpx;
+  border-radius: 32rpx;
   margin-top: 20rpx;
-  box-shadow: 0 16rpx 40rpx rgba(92,38,25,0.35), inset 0 1rpx 0 rgba(255,255,255,0.25);
+  box-shadow: 0 12rpx 32rpx rgba(180,85,46,0.3), inset 0 1rpx 0 rgba(255,255,255,0.2);
 }
 .save-btn::after {
   border: none;
@@ -218,31 +288,33 @@
 .add-btn {
   font-size: 24rpx;
   padding: 10rpx 24rpx;
-  border-radius: 20rpx;
+  border-radius: 24rpx;
   background: rgba(79,122,74,0.85);
   color: #ffffff;
   font-weight: 600;
 }
 
+/* ========== 分类卡片 ========== */
 .category-list {
   display: flex;
   flex-direction: column;
   gap: 20rpx;
 }
 .category-card {
-  background: rgba(255,255,255,0.4);
-  backdrop-filter: blur(30rpx) saturate(180%);
-  -webkit-backdrop-filter: blur(30rpx) saturate(180%);
-  border: 1rpx solid rgba(255,255,255,0.6);
-  border-radius: 24rpx;
-  padding: 20rpx;
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(60rpx);
+  -webkit-backdrop-filter: blur(60rpx);
+  border: 1rpx solid rgba(255,255,255,0.5);
+  border-radius: 32rpx;
+  padding: 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.04), inset 0 1rpx 0 rgba(255,255,255,0.85);
 }
 .category-header {
   display: flex;
   align-items: center;
   margin-bottom: 16rpx;
   padding-bottom: 16rpx;
-  border-bottom: 1rpx solid rgba(138,111,92,0.15);
+  border-bottom: 1rpx solid rgba(0,0,0,0.05);
 }
 .category-icon {
   font-size: 36rpx;
@@ -251,8 +323,8 @@
 .category-name {
   flex: 1;
   font-size: 28rpx;
-  font-weight: 700;
-  color: #2a1810;
+  font-weight: 600;
+  color: #1A1A1A;
 }
 .category-actions {
   display: flex;
@@ -262,7 +334,7 @@
 .action-btn {
   font-size: 22rpx;
   padding: 6rpx 16rpx;
-  border-radius: 16rpx;
+  border-radius: 20rpx;
 }
 .action-btn.edit {
   background: rgba(224,138,60,0.15);
@@ -273,6 +345,7 @@
   color: #b4432e;
 }
 
+/* ========== 商品列表 ========== */
 .product-list {
   display: flex;
   flex-direction: column;
@@ -283,8 +356,11 @@
   display: flex;
   align-items: center;
   padding: 16rpx;
-  background: rgba(255,255,255,0.5);
-  border-radius: 16rpx;
+  background: rgba(255,255,255,0.3);
+  backdrop-filter: blur(40rpx);
+  -webkit-backdrop-filter: blur(40rpx);
+  border-radius: 24rpx;
+  border: 1rpx solid rgba(255,255,255,0.5);
 }
 .product-emoji {
   font-size: 32rpx;
@@ -293,17 +369,18 @@
 .product-image {
   width: 64rpx;
   height: 64rpx;
-  border-radius: 12rpx;
+  border-radius: 16rpx;
   margin-right: 14rpx;
   flex-shrink: 0;
 }
 
+/* ========== 图片上传区域 ========== */
 .image-upload-area {
   width: 200rpx;
   height: 200rpx;
-  border-radius: 16rpx;
-  border: 2rpx dashed rgba(138,111,92,0.3);
-  background: rgba(255,255,255,0.4);
+  border-radius: 24rpx;
+  border: 2rpx dashed rgba(0,0,0,0.1);
+  background: rgba(255,255,255,0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -325,7 +402,7 @@
 }
 .upload-text {
   font-size: 22rpx;
-  color: #8a6f5c;
+  color: #888888;
 }
 .image-actions {
   margin-top: 12rpx;
@@ -337,11 +414,11 @@
   display: block;
   font-size: 26rpx;
   font-weight: 600;
-  color: #2a1810;
+  color: #1A1A1A;
 }
 .product-price {
   font-size: 22rpx;
-  color: #b4552e;
+  color: #B4552E;
 }
 .product-actions {
   display: flex;
@@ -352,37 +429,44 @@
   text-align: center;
   font-size: 24rpx;
   padding: 14rpx;
-  border-radius: 16rpx;
-  background: rgba(255,255,255,0.3);
-  color: #6b5644;
-  border: 1rpx dashed rgba(138,111,92,0.3);
+  border-radius: 24rpx;
+  background: rgba(255,255,255,0.25);
+  color: #666666;
+  border: 1rpx dashed rgba(0,0,0,0.1);
 }
 
+/* ========== 弹窗 ========== */
 .modal {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.25);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  backdrop-filter: blur(10rpx);
+  -webkit-backdrop-filter: blur(10rpx);
 }
 .modal-content {
   width: 600rpx;
-  background: #fff8f0;
-  border-radius: 32rpx;
-  padding: 40rpx;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(80rpx);
+  -webkit-backdrop-filter: blur(80rpx);
+  border: 1rpx solid rgba(255,255,255,0.8);
+  border-radius: 48rpx;
+  padding: 48rpx;
   max-height: 80vh;
   overflow-y: auto;
+  box-shadow: 0 20rpx 60rpx rgba(0,0,0,0.08), inset 0 1rpx 0 rgba(255,255,255,0.9);
 }
 .modal-title {
   display: block;
-  font-size: 32rpx;
-  font-weight: 700;
-  color: #2a1810;
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #1A1A1A;
   text-align: center;
   margin-bottom: 32rpx;
 }
@@ -392,17 +476,19 @@
 .modal-label {
   display: block;
   font-size: 24rpx;
-  color: #6b5644;
+  color: #888888;
   margin-bottom: 10rpx;
 }
 .modal-input {
   width: 100%;
-  background: rgba(255,255,255,0.6);
-  border: 1rpx solid rgba(138,111,92,0.2);
-  border-radius: 16rpx;
+  background: rgba(255,255,255,0.5);
+  border: 1rpx solid rgba(255,255,255,0.6);
+  border-radius: 24rpx;
   padding: 20rpx;
   font-size: 26rpx;
-  color: #2a1810;
+  color: #1A1A1A;
+  backdrop-filter: blur(30rpx);
+  -webkit-backdrop-filter: blur(30rpx);
 }
 .emoji-picker {
   display: flex;
@@ -413,8 +499,8 @@
 .emoji-option {
   font-size: 40rpx;
   padding: 10rpx;
-  border-radius: 12rpx;
-  background: rgba(255,255,255,0.6);
+  border-radius: 16rpx;
+  background: rgba(255,255,255,0.4);
 }
 .emoji-option:active {
   background: rgba(224,138,60,0.2);
@@ -432,13 +518,16 @@
 .modal-btn {
   flex: 1;
   padding: 20rpx;
-  border-radius: 20rpx;
+  border-radius: 28rpx;
   font-size: 28rpx;
   font-weight: 600;
 }
 .modal-btn.cancel {
-  background: rgba(138,111,92,0.15);
-  color: #6b5644;
+  background: rgba(255,255,255,0.4);
+  backdrop-filter: blur(30rpx);
+  -webkit-backdrop-filter: blur(30rpx);
+  border: 1rpx solid rgba(255,255,255,0.5);
+  color: #666666;
 }
 .modal-btn.confirm {
   background: rgba(79,122,74,0.85);
