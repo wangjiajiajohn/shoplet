@@ -101,7 +101,7 @@
               <text wx:else class="product-emoji">{{product.emoji}}</text>
               <view class="product-info">
                 <text class="product-name">{{product.name}}</text>
-                <text class="product-price">{{product.price}}</text>
+                <text class="product-price">{{product.price}}元</text>
               </view>
               <view class="product-actions">
                 <text class="action-btn edit" bindtap="editProduct" data-cat="{{category.id}}" data-pid="{{product.id}}">编辑</text>
@@ -184,7 +184,7 @@
       </view>
       <view class="modal-field">
         <text class="modal-label">价格</text>
-        <input class="modal-input" placeholder="例如：¥15 或 +¥8" value="{{productForm.price}}" bindinput="onProductPriceInput" />
+        <input class="modal-input" placeholder="例如：15 或 +8" value="{{productForm.price}}" bindinput="onProductPriceInput" />
       </view>
       <view class="modal-field">
         <text class="modal-label">价格后缀（选填）</text>

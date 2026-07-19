@@ -89,7 +89,7 @@
               <text class="menu-desc">{{product.desc}}</text>
             </view>
             <view class="menu-price-box">
-              <text class="menu-price">{{product.price}}</text>
+              <text class="menu-price">{{product.price}}元</text>
               <text wx:if="{{product.priceSuffix}}" class="menu-price-sub">{{product.priceSuffix}}</text>
             </view>
           </view>
