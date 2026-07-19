@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>shoplet拌川 - 内部管理系统</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+    .login-page { display: flex; align-items: center; justify-content: center; min-height: 100vh; background: linear-gradient(135deg, #FF9A56 0%, #FF6B6B 100%); }
+    .login-box { background: white; padding: 40px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); width: 100%; max-width: 400px; }
+    .login-box h1 { text-align: center; color: #333; margin-bottom: 8px; }
+    .login-box p { text-align: center; color: #999; margin-bottom: 30px; }
+    .login-box input { width: 100%; padding: 14px 16px; margin-bottom: 16px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 16px; transition: border-color 0.3s; }
+    .login-box input:focus { outline: none; border-color: #FF9A56; }
+    .login-box button { width: 100%; padding: 14px; background: linear-gradient(135deg, #FF9A56 0%, #FF6B6B 100%); color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; transition: opacity 0.3s; }
+    .login-box button:hover { opacity: 0.9; }
+    .login-box .error { color: #ff4444; text-align: center; margin-top: 10px; font-size: 14px; }
+
+    .admin-page { display: none; height: 100vh; }
+    .admin-header { background: linear-gradient(135deg, #FF9A56 0%, #FF6B6B 100%); color: white; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; }
+    .admin-header h1 { font-size: 20px; }
+    .admin-header button { background: rgba(255,255,255,0.2); border: none; color: white; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+    .admin-content { padding: 30px; }
+    .admin-content .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .admin-content .top-bar h2 { color: #333; }
+    .admin-content .add-btn { background: linear-gradient(135deg, #FF9A56 0%, #FF6B6B 100%); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 14px; }
+
+    .merchant-table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+    .merchant-table th, .merchant-table td { padding: 16px; text-align: left; border-bottom: 1px solid #f0f0f0; }
+    .merchant-table th { background: #fafafa; color: #666; font-weight: 500; font-size: 14px; }
+    .merchant-table tr:hover { background: #f9f9f9; }
+    .merchant-table .action-btns { display: flex; gap: 8px; }
+    .merchant-table .action-btns button { padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; }
+    .merchant-table .action-btns .edit-btn { background: #E3F2FD; color: #1976D2; }
+    .merchant-table .action-btns .delete-btn { background: #FFEBEE; color: #C62828; }
+
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 1000; }
+    .modal-overlay.show { display: flex; }
+    .modal-box { background: white; padding: 30px; border-radius: 12px; width: 100%; max-width: 500px; }
+    .modal-box h3 { margin-bottom: 20px; color: #333; }
+    .modal-box .form-group { margin-bottom: 16px; }
+    .modal-box .form-group label { display: block; margin-bottom: 6px; color: #666; font-size: 14px; }
+    .modal-box .form-group input { width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 6px; font-size: 14px; }
+    .modal-box .form-group input:focus { outline: none; border-color: #FF9A56; }
+    .modal-box .form-group .hint { color: #999; font-size: 12px; margin-top: 4px; }
+    .modal-box .modal-btns { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; }
+    .modal-box .modal-btns button { padding: 10px 24px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; }
+    .modal-box .modal-btns .cancel-btn { background: #f0f0f0; color: #666; }
+    .modal-box .modal-btns .confirm-btn { background: linear-gradient(135deg, #FF9A56 0%, #FF6B6B 100%); color: white; }
+
+    .empty-state { text-align: center; padding: 60px 20px; color: #999; }
+    .empty-state .icon { font-size: 48px; margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+  <div class="login-page" id="loginPage">
+    <div class="login-box">
+      <h1>shoplet拌川</h1>
+      <p>内部管理系统</p>
+      <input type="text" id="username" placeholder="用户名" />
+      <input type="password" id="password" placeholder="密码" />
+      <button onclick="handleLogin()">登录</button>
+      <div class="error" id="loginError"></div>
+    </div>
+  </div>
+
+  <div class="admin-page" id="adminPage">
+    <div class="admin-header">
+      <h1>shoplet拌川 - 内部管理系统</h1>
+      <button onclick="handleLogout()">退出登录</button>
+    </div>
+    <div class="admin-content">
+      <div class="top-bar">
+        <h2>商家管理</h2>
+        <button class="add-btn" onclick="showAddModal()">添加商家</button>
+      </div>
+      <table class="merchant-table" id="merchantTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>小程序名称</th>
+            <th>小程序AppID</th>
+            <th>老板微信OPENID</th>
+            <th>联系电话</th>
+            <th>创建时间</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="merchantList">
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-box">
+      <h3 id="modalTitle">添加商家</h3>
+      <input type="hidden" id="editId" />
+      <div class="form-group">
+        <label>小程序名称</label>
+        <input type="text" id="appName" placeholder="例如：shoplet拌川" />
+      </div>
+      <div class="form-group">
+        <label>小程序AppID *</label>
+        <input type="text" id="appId" placeholder="wxxxxxxxxxxxxxxxxx" />
+        <div class="hint">必填，用于识别小程序</div>
+      </div>
+      <div class="form-group">
+        <label>老板微信OPENID</label>
+        <input type="text" id="wechatOpenid" placeholder="用户的微信OPENID" />
+        <div class="hint">用户首次登录小程序时获取，填写后该用户即为该小程序的老板</div>
+      </div>
+      <div class="form-group">
+        <label>联系电话</label>
+        <input type="text" id="phone" placeholder="老板联系电话" />
+      </div>
+      <div class="modal-btns">
+        <button class="cancel-btn" onclick="hideModal()">取消</button>
+        <button class="confirm-btn" onclick="saveMerchant()">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = 'http://localhost:3001/api';
+    let token = '';
+
+    function handleLogin() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const errorEl = document.getElementById('loginError');
+
+      if (!username || !password) {
+        errorEl.textContent = '请输入用户名和密码';
+        return;
+      }
+
+      fetch(`${API_BASE}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          token = data.token;
+          localStorage.setItem('token', token);
+          document.getElementById('loginPage').style.display = 'none';
+          document.getElementById('adminPage').style.display = 'block';
+          loadMerchants();
+        } else {
+          errorEl.textContent = data.message;
+        }
+      })
+      .catch(() => {
+        errorEl.textContent = '登录失败，请检查服务器是否运行';
+      });
+    }
+
+    function handleLogout() {
+      token = '';
+      localStorage.removeItem('token');
+      document.getElementById('adminPage').style.display = 'none';
+      document.getElementById('loginPage').style.display = 'flex';
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+    }
+
+    function loadMerchants() {
+      fetch(`${API_BASE}/merchants`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          renderMerchants(data.data);
+        } else {
+          alert(data.message);
+        }
+      });
+    }
+
+    function renderMerchants(merchants) {
+      const tbody = document.getElementById('merchantList');
+      
+      if (!merchants || merchants.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="empty-state"><div class="icon">📋</div><div>暂无商家数据</div></td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = merchants.map(m => `
+        <tr>
+          <td>${m.id}</td>
+          <td>${m.app_name || '-'}</td>
+          <td>${m.app_id}</td>
+          <td>${m.wechat_openid || '-'}</td>
+          <td>${m.phone || '-'}</td>
+          <td>${new Date(m.created_at).toLocaleString()}</td>
+          <td>
+            <div class="action-btns">
+              <button class="edit-btn" onclick="showEditModal(${m.id})">编辑</button>
+              <button class="delete-btn" onclick="deleteMerchant(${m.id})">删除</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function showAddModal() {
+      document.getElementById('modalTitle').textContent = '添加商家';
+      document.getElementById('editId').value = '';
+      document.getElementById('appName').value = '';
+      document.getElementById('appId').value = '';
+      document.getElementById('wechatOpenid').value = '';
+      document.getElementById('phone').value = '';
+      document.getElementById('modalOverlay').classList.add('show');
+    }
+
+    function showEditModal(id) {
+      fetch(`${API_BASE}/merchants/${id}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          const m = data.data;
+          document.getElementById('modalTitle').textContent = '编辑商家';
+          document.getElementById('editId').value = m.id;
+          document.getElementById('appName').value = m.app_name;
+          document.getElementById('appId').value = m.app_id;
+          document.getElementById('wechatOpenid').value = m.wechat_openid;
+          document.getElementById('phone').value = m.phone;
+          document.getElementById('modalOverlay').classList.add('show');
+        }
+      });
+    }
+
+    function hideModal() {
+      document.getElementById('modalOverlay').classList.remove('show');
+    }
+
+    function saveMerchant() {
+      const id = document.getElementById('editId').value;
+      const app_name = document.getElementById('appName').value;
+      const app_id = document.getElementById('appId').value;
+      const wechat_openid = document.getElementById('wechatOpenid').value;
+      const phone = document.getElementById('phone').value;
+
+      if (!app_id) {
+        alert('请输入小程序AppID');
+        return;
+      }
+
+      const url = id ? `${API_BASE}/merchants/${id}` : `${API_BASE}/merchants`;
+      const method = id ? 'PUT' : 'POST';
+
+      fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ app_name, app_id, wechat_openid, phone })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert(data.message);
+          hideModal();
+          loadMerchants();
+        } else {
+          alert(data.message);
+        }
+      });
+    }
+
+    function deleteMerchant(id) {
+      if (!confirm('确定删除该商家吗？')) return;
+
+      fetch(`${API_BASE}/merchants/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert(data.message);
+          loadMerchants();
+        } else {
+          alert(data.message);
+        }
+      });
+    }
+
+    window.onload = function() {
+      token = localStorage.getItem('token');
+      if (token) {
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('adminPage').style.display = 'block';
+        loadMerchants();
+      }
+    };
+  </script>
+</body>
+</html>
