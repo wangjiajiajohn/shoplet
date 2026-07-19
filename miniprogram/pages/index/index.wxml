@@ -51,19 +51,25 @@
   </view>
 
   <!-- 地点 / 时间 -->
-  <view class="info-grid">
-    <view class="info-item info-loc" bindtap="openMap">
+  <view class="info-card">
+    <view class="info-left" bindtap="openMap">
       <text class="info-icon">📍</text>
-      <text class="info-k">地点</text>
-      <text class="info-v">{{info.location}}</text>
-      <text class="info-sub">{{info.locationSub}}</text>
-      <text class="info-arrow">›</text>
+      <view class="info-content">
+        <text class="info-k">地点</text>
+        <view class="info-row">
+          <text class="info-v">{{info.location}}</text>
+          <text class="info-arrow">›</text>
+        </view>
+        <text class="info-sub">{{info.locationSub}}</text>
+      </view>
     </view>
-    <view class="info-item info-time">
+    <view class="info-divider"></view>
+    <view class="info-right">
       <text class="info-icon">🕔</text>
-      <text class="info-k">时间</text>
-      <text class="info-v">{{info.time}}</text>
-      <text class="info-sub">{{info.timeSub}}</text>
+      <view class="info-content">
+        <text class="info-k">时间</text>
+        <text class="info-v">{{info.time}}</text>
+      </view>
     </view>
   </view>
 

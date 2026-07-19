@@ -327,64 +327,83 @@
 }
 
 /* ========== 地点/时间信息卡 ========== */
-.info-grid {
+.info-card {
   position: relative;
   z-index: 1;
   display: flex;
-  gap: 20rpx;
-  margin-bottom: 24rpx;
-}
-.info-item {
-  position: relative;
-  flex: 1;
+  align-items: center;
   background: rgba(255,255,255,0.3);
   backdrop-filter: blur(40rpx);
   -webkit-backdrop-filter: blur(40rpx);
   border: 1rpx solid rgba(255,255,255,0.5);
   border-radius: 32rpx;
   padding: 28rpx;
-  display: flex;
-  flex-direction: column;
+  margin-bottom: 24rpx;
   box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.04), inset 0 1rpx 0 rgba(255,255,255,0.8);
+}
+.info-left {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  cursor: pointer;
+}
+.info-left:active {
+  opacity: 0.7;
+}
+.info-right {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+}
+.info-divider {
+  width: 1rpx;
+  height: 80rpx;
+  background: rgba(0,0,0,0.06);
+  margin: 0 24rpx;
 }
 .info-icon {
   font-size: 32rpx;
-  margin-bottom: 12rpx;
+  margin-right: 14rpx;
+  flex-shrink: 0;
+}
+.info-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.info-row {
+  display: flex;
+  align-items: center;
 }
 .info-k {
   font-size: 20rpx;
   color: #888888;
-  margin-bottom: 6rpx;
+  margin-bottom: 4rpx;
 }
 .info-v {
+  flex: 1;
   font-size: 28rpx;
-  font-weight: 600;
+  font-weight: 700;
   color: #1A1A1A;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .info-sub {
   font-size: 20rpx;
   color: #888888;
-  margin-top: 4rpx;
-}
-.info-loc {
-  cursor: pointer;
-}
-.info-loc:active {
-  background: rgba(255,255,255,0.45);
+  margin-top: 2rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .info-arrow {
-  position: absolute;
-  right: 26rpx;
-  bottom: 26rpx;
-  font-size: 32rpx;
+  font-size: 28rpx;
   color: #888888;
   font-weight: 300;
-}
-.info-time {
-  cursor: pointer;
-}
-.info-time:active {
-  background: rgba(255,255,255,0.45);
+  flex-shrink: 0;
+  margin-left: 8rpx;
 }
 
 /* ========== 分类切换 —— 果冻胶囊动效 ========== */
