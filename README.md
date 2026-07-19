@@ -39,7 +39,7 @@ youdianwan/
 **顾客端（pages/index）**
 - 出摊状态（营业中 / 今日休息），带印章样式和呼吸灯
 - 今日出摊地点、时间
-- 拌川 / 饮品 分类切换菜单，每项带图标和价格
+- 商品分类切换菜单，每项带图标和价格
 
 **老板端（pages/admin）**
 - 页面右上角点「⚙ 老板设置」进入（真实上线前建议加个简单密码或只给老板自己看到入口）
@@ -71,7 +71,7 @@ youdianwan/
 1. 把拍好的照片放进 `miniprogram/images/` 目录，比如 `banchuan-1.jpg`（建议裁成接近 16:10 或 4:3 的横图，效果最好）
 2. 打开 `pages/index/index.js`，给对应菜品加一个 `image` 字段，比如：
    ```js
-   { name: '杭州老式拌川', hot: true, desc: '...', price: '¥15', image: '/images/banchuan-1.jpg' }
+   { name: '招牌商品', hot: true, desc: '...', price: '¥15', image: '/images/product-1.jpg' }
    ```
 3. 不用改 wxml 和 wxss —— 只要数据里有 `image` 字段，就会自动显示真实照片；没有 `image` 字段的菜品会继续显示 emoji 占位图，方便你一道一道慢慢换照片，不用一次性全换完。
 

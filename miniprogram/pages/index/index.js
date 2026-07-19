@@ -193,7 +193,7 @@ Page({
   onShareAppMessage() {
     return {
       title: 'shoplet',
-      desc: '老板已经支好摊子，铁锅正热着 —— 现在过去，拌川管够。',
+      desc: '老板已经支好摊子，商品齐全 —— 现在过去，选购愉快。',
       path: '/pages/index/index'
     };
   },

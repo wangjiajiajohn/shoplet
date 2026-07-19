@@ -44,7 +44,7 @@
       <text class="headline-text">{{info.status === 'started' ? '营业中' : info.status === 'ended' ? '已收摊' : '今日尚未出摊'}}</text>
     </view>
     <text class="status-desc">
-      {{info.status === 'started' ? '老板已经支好摊子，铁锅正热着 —— 现在过去，拌川管够。' : info.status === 'ended' ? '老板已经收摊了，明天早点来～' : '老板还没出摊，记得关注出摊时间哦～'}}
+      {{info.status === 'started' ? '老板已经支好摊子，商品齐全 —— 现在过去，选购愉快。' : info.status === 'ended' ? '老板已经收摊了，明天早点来～' : '老板还没出摊，记得关注出摊时间哦～'}}
     </text>
     <text wx:if="{{info.note}}" class="status-note">💬 {{info.note}}</text>
   </view>
