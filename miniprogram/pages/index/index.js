@@ -109,11 +109,6 @@ Page({
     wx.navigateTo({ url: '/pages/admin/admin' });
   },
 
-  goShopDetail() {
-    this.closeSidebar();
-    wx.navigateTo({ url: '/pages/shop-detail/shop-detail' });
-  },
-
   goOrders() {
     this.closeSidebar();
     wx.navigateTo({ url: '/pages/orders/orders' });

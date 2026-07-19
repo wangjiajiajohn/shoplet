@@ -706,6 +706,44 @@
   background: rgba(0,0,0,0.03);
 }
 
+.sidebar-qrcode {
+  padding: 0 32rpx;
+  margin-bottom: 16rpx;
+}
+
+.qrcode-container {
+  background: rgba(255,255,255,0.4);
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+  border-radius: 24rpx;
+  padding: 28rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qrcode-img {
+  width: 280rpx;
+  border-radius: 16rpx;
+  border: 4rpx solid rgba(255,255,255,0.8);
+  box-shadow: 0 8rpx 20rpx rgba(92,38,25,0.15);
+}
+
+.qrcode-hint {
+  font-size: 22rpx;
+  color: #8A6F5C;
+  margin-top: 16rpx;
+  letter-spacing: 2rpx;
+}
+
+.qrcode-tip {
+  font-size: 24rpx;
+  color: #B4552E;
+  margin-top: 8rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+}
+
 .sidebar-menu {
   flex: 1;
   padding: 20rpx 32rpx;

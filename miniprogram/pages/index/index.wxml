@@ -127,12 +127,15 @@
 
     <view class="sidebar-divider"></view>
 
-    <view class="sidebar-menu">
-      <view class="sidebar-item" bindtap="goShopDetail">
-        <text class="sidebar-item-icon">🏪</text>
-        <text class="sidebar-item-text">商家信息</text>
-        <text class="sidebar-item-arrow">›</text>
+    <view class="sidebar-qrcode" wx:if="{{info.qrcode}}">
+      <view class="qrcode-container">
+        <image class="qrcode-img" src="{{info.qrcode}}" mode="widthFix" show-menu-by-longpress />
+        <text class="qrcode-hint">长按识别二维码</text>
+        <text class="qrcode-tip">🎁 入群享更多优惠</text>
       </view>
+    </view>
+
+    <view class="sidebar-menu">
       <view class="sidebar-item" bindtap="goOrders">
         <text class="sidebar-item-icon">📋</text>
         <text class="sidebar-item-text">我的订单</text>
