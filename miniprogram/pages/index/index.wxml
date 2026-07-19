@@ -26,10 +26,20 @@
   
   <!-- 消息滚动栏 -->
   <view class="scroll-bar" wx:if="{{info.announcement}}" style="top:{{navBarHeight + 8}}px">
-    <text class="scroll-icon">📢</text>
-    <view class="scroll-track">
-      <text class="scroll-text">{{info.announcement}}</text>
+    <view class="scroll-bar-gradient scroll-bar-top"></view>
+    <view class="scroll-bar-inner">
+      <view class="scroll-icon-wrap">
+        <view class="scroll-icon-horn"></view>
+        <view class="scroll-icon-horn-tip"></view>
+        <view class="scroll-icon-wave scroll-icon-wave-1"></view>
+        <view class="scroll-icon-wave scroll-icon-wave-2"></view>
+        <view class="scroll-icon-wave scroll-icon-wave-3"></view>
+      </view>
+      <view class="scroll-track">
+        <text class="scroll-text">{{info.announcement}}</text>
+      </view>
     </view>
+    <view class="scroll-bar-gradient scroll-bar-bottom"></view>
   </view>
 
   <!-- 出摊状态卡 -->
