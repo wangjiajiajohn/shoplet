@@ -9,7 +9,12 @@ Page({
     navBarHeight: 0,
     rightSafe: 0,
     tapCount: 0,
-    loading: true
+    loading: true,
+    sidebarOpen: false,
+    userInfo: {
+      avatarUrl: '',
+      nickName: ''
+    }
   },
 
   onLoad() {
@@ -17,10 +22,17 @@ Page({
     const navBarHeight = sysInfo.statusBarHeight + 48;
     const menuBtn = sysInfo.menuButtonBoundingClientRect;
     const rightSafe = menuBtn ? (sysInfo.windowWidth - menuBtn.right + 32) : 28;
+    
+    const savedUserInfo = wx.getStorageSync('userInfo') || {};
+    
     this.setData({ 
       statusBarHeight: sysInfo.statusBarHeight, 
       navBarHeight,
-      rightSafe
+      rightSafe,
+      userInfo: {
+        avatarUrl: savedUserInfo.avatarUrl || '',
+        nickName: savedUserInfo.nickName || ''
+      }
     });
     this.loadData();
   },
@@ -98,7 +110,67 @@ Page({
   },
 
   goShopDetail() {
+    this.closeSidebar();
     wx.navigateTo({ url: '/pages/shop-detail/shop-detail' });
+  },
+
+  goOrders() {
+    this.closeSidebar();
+    wx.navigateTo({ url: '/pages/orders/orders' });
+  },
+
+  toggleSidebar() {
+    this.setData({ sidebarOpen: !this.data.sidebarOpen });
+  },
+
+  closeSidebar() {
+    this.setData({ sidebarOpen: false });
+  },
+
+  chooseAvatar() {
+    wx.chooseMedia({
+      count: 1,
+      mediaType: ['image'],
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success: async (res) => {
+        const tempFilePath = res.tempFiles[0].tempFilePath;
+        
+        if (app.globalData.dbReady) {
+          const cloudPath = 'avatar/' + Date.now() + '.png';
+          
+          try {
+            const uploadRes = await wx.cloud.uploadFile({
+              cloudPath: cloudPath,
+              filePath: tempFilePath
+            });
+            
+            const userInfo = { ...this.data.userInfo, avatarUrl: uploadRes.fileID };
+            this.setData({ userInfo });
+            wx.setStorageSync('userInfo', userInfo);
+            wx.showToast({ title: '头像更新成功', icon: 'success' });
+          } catch (error) {
+            console.error('上传头像失败:', error);
+            wx.showToast({ title: '上传失败', icon: 'none' });
+          }
+        } else {
+          const userInfo = { ...this.data.userInfo, avatarUrl: tempFilePath };
+          this.setData({ userInfo });
+          wx.setStorageSync('userInfo', userInfo);
+          wx.showToast({ title: '头像已保存（仅本地）', icon: 'none' });
+        }
+      },
+      fail: () => {
+        wx.showToast({ title: '取消选择', icon: 'none' });
+      }
+    });
+  },
+
+  onNicknameBlur(e) {
+    const nickName = e.detail.value;
+    const userInfo = { ...this.data.userInfo, nickName };
+    this.setData({ userInfo });
+    wx.setStorageSync('userInfo', userInfo);
   },
 
   onUnload() {

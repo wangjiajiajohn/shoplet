@@ -7,7 +7,7 @@
   <!-- 玻璃导航栏 -->
   <view class="nav-bar" style="padding-top:{{statusBarHeight}}px">
     <view class="nav-left">
-      <view class="nav-menu" bindtap="goShopDetail">
+      <view class="nav-menu" bindtap="toggleSidebar">
         <text class="menu-icon">☰</text>
       </view>
     </view>
@@ -104,5 +104,46 @@
   </view>
 
   <text class="footer-note">灶火不熄 · 明天再见</text>
+
+  <!-- 侧边栏遮罩 -->
+  <view wx:if="{{sidebarOpen}}" class="sidebar-mask {{sidebarOpen ? 'mask-visible' : ''}}" catchtap="closeSidebar"></view>
+
+  <!-- 侧边栏 -->
+  <view class="sidebar {{sidebarOpen ? 'sidebar-open' : ''}}">
+    <view class="sidebar-header" style="padding-top:{{navBarHeight + 40}}rpx">
+      <view class="user-avatar-wrapper">
+        <image wx:if="{{userInfo.avatarUrl}}" class="user-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill" />
+        <view wx:else class="user-avatar-placeholder">
+          <text class="avatar-icon">👤</text>
+        </view>
+        <view class="avatar-edit-btn" bindtap="chooseAvatar">
+          <text class="edit-icon">✏️</text>
+        </view>
+      </view>
+      <view class="user-info">
+        <input type="nickname" class="user-nickname" placeholder="点击输入昵称" value="{{userInfo.nickName}}" bindblur="onNicknameBlur" />
+      </view>
+    </view>
+
+    <view class="sidebar-divider"></view>
+
+    <view class="sidebar-menu">
+      <view class="sidebar-item" bindtap="goShopDetail">
+        <text class="sidebar-item-icon">🏪</text>
+        <text class="sidebar-item-text">商家信息</text>
+        <text class="sidebar-item-arrow">›</text>
+      </view>
+      <view class="sidebar-item" bindtap="goOrders">
+        <text class="sidebar-item-icon">📋</text>
+        <text class="sidebar-item-text">我的订单</text>
+        <text class="sidebar-item-arrow">›</text>
+      </view>
+    </view>
+
+    <view class="sidebar-footer">
+      <text class="footer-text">有点晚拌川</text>
+      <text class="footer-version">v1.0</text>
+    </view>
+  </view>
 
 </view>

@@ -2,7 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/admin/admin",
-    "pages/shop-detail/shop-detail"
+    "pages/shop-detail/shop-detail",
+    "pages/orders/orders"
   ],
   "window": {
     "navigationBarBackgroundColor": "#F2A65A",
