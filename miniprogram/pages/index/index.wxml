@@ -69,7 +69,8 @@
   <!-- 分类切换 -->
   <view class="cat-switch-wrapper" wx:if="{{menu.categories && menu.categories.length > 0}}" style="top:{{navBarHeight + (info.announcement ? 46 : 8)}}px">
     <view class="cat-switch">
-      <view class="cat-btn {{activeCat === cat.id ? 'active' : ''}}" wx:for="{{menu.categories}}" wx:for-item="cat" wx:key="id" data-cat="{{cat.id}}" bindtap="switchCat">{{cat.name}}</view>
+      <view class="cat-switch-bg" style="transform: translateX({{activeCatIndex * 100}}%)"></view>
+      <view class="cat-btn {{activeCat === cat.id ? 'active' : ''}}" wx:for="{{menu.categories}}" wx:for-item="cat" wx:key="id" data-cat="{{cat.id}}" data-index="{{index}}" bindtap="switchCat">{{cat.name}}</view>
     </view>
   </view>
 

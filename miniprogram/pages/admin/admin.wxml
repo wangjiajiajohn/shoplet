@@ -5,13 +5,14 @@
 
   <!-- Tab切换 -->
   <view class="tab-wrapper">
-    <view class="tab-item {{activeTab === 'daily' ? 'active' : ''}}" bindtap="switchTab" data-tab="daily">
+    <view class="tab-bg" style="transform: translateX({{activeTabIndex * 100}}%)"></view>
+    <view class="tab-item {{activeTab === 'daily' ? 'active' : ''}}" bindtap="switchTab" data-tab="daily" data-index="0">
       每日设置
     </view>
-    <view class="tab-item {{activeTab === 'menu' ? 'active' : ''}}" bindtap="switchTab" data-tab="menu">
+    <view class="tab-item {{activeTab === 'menu' ? 'active' : ''}}" bindtap="switchTab" data-tab="menu" data-index="1">
       商品管理
     </view>
-    <view class="tab-item {{activeTab === 'shop' ? 'active' : ''}}" bindtap="switchTab" data-tab="shop">
+    <view class="tab-item {{activeTab === 'shop' ? 'active' : ''}}" bindtap="switchTab" data-tab="shop" data-index="2">
       店铺设置
     </view>
   </view>

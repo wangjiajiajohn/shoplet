@@ -3,6 +3,7 @@ const app = getApp();
 Page({
   data: {
     activeTab: 'daily',
+    activeTabIndex: 0,
     form: {
       status: 'not_started',
       location: '',
@@ -73,7 +74,8 @@ Page({
 
   switchTab(e) {
     const tab = e.currentTarget.dataset.tab;
-    this.setData({ activeTab: tab });
+    const index = e.currentTarget.dataset.index;
+    this.setData({ activeTab: tab, activeTabIndex: index });
   },
 
   // ========== 每日设置功能 ==========

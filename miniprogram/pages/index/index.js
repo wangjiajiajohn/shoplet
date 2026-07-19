@@ -5,6 +5,8 @@ Page({
     info: {},
     menu: {},
     activeCat: 'banchuan',
+    activeCatIndex: 0,
+    jellyAnimation: {},
     statusBarHeight: 0,
     navBarHeight: 0,
     rightSafe: 0,
@@ -54,10 +56,12 @@ Page({
       if (!hasCategory) {
         activeCat = menu.categories && menu.categories[0]?.id || 'banchuan';
       }
+      const activeCatIndex = menu.categories && menu.categories.findIndex(c => c.id === activeCat) || 0;
       this.setData({ 
         info,
         menu,
         activeCat,
+        activeCatIndex,
         loading: false
       });
     } catch (error) {
@@ -68,7 +72,8 @@ Page({
 
   switchCat(e) {
     const newCat = e.currentTarget.dataset.cat;
-    this.setData({ activeCat: newCat });
+    const newIndex = e.currentTarget.dataset.index;
+    this.setData({ activeCat: newCat, activeCatIndex: newIndex });
   },
 
   openMap() {
