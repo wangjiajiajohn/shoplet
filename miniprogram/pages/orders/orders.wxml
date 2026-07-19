@@ -4,11 +4,15 @@
   <view class="blob blob-3"></view>
 
   <view class="nav-bar" style="padding-top:{{statusBarHeight}}px; height:{{navBarHeight}}px">
-    <view class="nav-back" bindtap="goBack">
-      <text class="back-icon">‹</text>
+    <view class="nav-left">
+      <view class="nav-back" bindtap="goBack">
+        <text class="back-icon">‹</text>
+      </view>
     </view>
-    <text class="nav-title">我的订单</text>
-    <view class="nav-placeholder"></view>
+    <view class="nav-center">
+      <text class="nav-title">我的订单</text>
+    </view>
+    <view class="nav-right"></view>
   </view>
 
   <view class="content" style="padding-top:{{navBarHeight}}px">

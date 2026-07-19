@@ -4,8 +4,20 @@
   <view class="blob blob-2"></view>
   <view class="blob blob-3"></view>
 
+  <view class="nav-bar" style="padding-top:{{statusBarHeight}}px; height:{{navBarHeight}}px">
+    <view class="nav-left">
+      <view class="nav-back" bindtap="goBack">
+        <text class="back-icon">‹</text>
+      </view>
+    </view>
+    <view class="nav-center">
+      <text class="nav-title">店铺设置</text>
+    </view>
+    <view class="nav-right"></view>
+  </view>
+
   <!-- Tab切换 -->
-  <view class="tab-wrapper">
+  <view class="tab-wrapper" style="top:{{navBarHeight}}px">
     <view class="tab-bg" style="transform: translateX({{activeTabIndex * 100}}%)"></view>
     <view class="tab-item {{activeTab === 'daily' ? 'active' : ''}}" bindtap="switchTab" data-tab="daily" data-index="0">
       每日设置
@@ -17,7 +29,7 @@
       店铺设置
     </view>
   </view>
-  <view class="tab-placeholder"></view>
+  <view class="tab-placeholder" style="height:calc({{navBarHeight}}px + 120rpx)"></view>
 
   <!-- 每日设置内容 -->
   <view wx:if="{{activeTab === 'daily'}}" class="tab-content">

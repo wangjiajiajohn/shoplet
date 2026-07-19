@@ -2,6 +2,8 @@ const app = getApp();
 
 Page({
   data: {
+    statusBarHeight: 0,
+    navBarHeight: 0,
     activeTab: 'daily',
     activeTabIndex: 0,
     form: {
@@ -41,6 +43,14 @@ Page({
     loading: true
   },
 
+  onLoad() {
+    const sysInfo = wx.getSystemInfoSync();
+    this.setData({
+      statusBarHeight: sysInfo.statusBarHeight,
+      navBarHeight: sysInfo.statusBarHeight + 48
+    });
+  },
+
   async onShow() {
     this.setData({ loading: true });
     try {
@@ -76,6 +86,10 @@ Page({
     const tab = e.currentTarget.dataset.tab;
     const index = e.currentTarget.dataset.index;
     this.setData({ activeTab: tab, activeTabIndex: index });
+  },
+
+  goBack() {
+    wx.navigateBack();
   },
 
   // ========== 每日设置功能 ==========
