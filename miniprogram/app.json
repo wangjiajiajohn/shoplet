@@ -6,11 +6,11 @@
     "pages/orders/orders"
   ],
   "window": {
-    "navigationBarBackgroundColor": "#F2A65A",
+    "navigationBarBackgroundColor": "#FFFFFF",
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "shoplet",
-    "backgroundColor": "#F2A65A",
-    "backgroundTextStyle": "light"
+    "backgroundColor": "#FFF8F0",
+    "backgroundTextStyle": "dark"
   },
   "permission": {
     "scope.userLocation": {

@@ -2,7 +2,7 @@
   position: relative;
   padding: 0 28rpx 60rpx;
   min-height: 100vh;
-  background: #FFFFFF;
+  background: linear-gradient(180deg, rgba(255,248,240,1) 0%, rgba(255,255,255,1) 100%);
 }
 
 /* ========== Liquid Glass Token System - iOS 26 Style ========== */
@@ -43,35 +43,35 @@
   pointer-events: none;
 }
 .blob-1 { 
-  width: 900rpx; 
-  height: 900rpx; 
-  top: -250rpx; 
-  right: -200rpx; 
-  background: rgba(255, 180, 130, 0.45);
+  width: 1200rpx; 
+  height: 1200rpx; 
+  top: -800rpx; 
+  right: -300rpx; 
+  background: rgba(255, 180, 130, 0.4);
   animation: blob-move-1 20s ease-in-out infinite;
 }
 .blob-2 { 
-  width: 800rpx; 
-  height: 800rpx; 
-  bottom: -200rpx; 
-  left: -200rpx; 
-  background: rgba(255, 220, 180, 0.4);
+  width: 1000rpx; 
+  height: 1000rpx; 
+  bottom: -300rpx; 
+  left: -300rpx; 
+  background: rgba(255, 220, 180, 0.35);
   animation: blob-move-2 25s ease-in-out infinite;
 }
 .blob-3 { 
-  width: 700rpx; 
-  height: 700rpx; 
-  top: 500rpx; 
-  right: 50rpx; 
-  background: rgba(255, 165, 110, 0.3);
+  width: 800rpx; 
+  height: 800rpx; 
+  top: 300rpx; 
+  right: -100rpx; 
+  background: rgba(255, 165, 110, 0.25);
   animation: blob-move-3 30s ease-in-out infinite;
 }
 .blob-4 { 
-  width: 600rpx; 
-  height: 600rpx; 
-  bottom: 200rpx; 
-  left: 100rpx; 
-  background: rgba(255, 230, 200, 0.35);
+  width: 700rpx; 
+  height: 700rpx; 
+  bottom: 100rpx; 
+  left: -50rpx; 
+  background: rgba(255, 230, 200, 0.3);
   animation: blob-move-4 22s ease-in-out infinite;
 }
 
