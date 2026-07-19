@@ -143,8 +143,12 @@
       </view>
     </view>
 
+    <view class="sidebar-close-btn" bindtap="closeSidebar">
+      <text class="close-icon">×</text>
+    </view>
+
     <view class="sidebar-footer">
-      <text class="footer-text">shoplet拌川</text>
+      <text class="footer-text">shoplet</text>
       <text class="footer-version">v1.0</text>
     </view>
   </view>

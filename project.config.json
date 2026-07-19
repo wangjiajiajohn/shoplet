@@ -1,5 +1,5 @@
 {
-  "description": "shoplet拌川 - 出摊小程序",
+  "description": "shoplet - 出摊小程序",
   "miniprogramRoot": "miniprogram/",
   "cloudfunctionRoot": "cloudfunctions/",
   "packOptions": {

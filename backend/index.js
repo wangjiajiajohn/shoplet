@@ -19,7 +19,7 @@ app.use('/api/merchants', merchantRoutes);
 app.use(express.static(path.join(__dirname, '../admin-website')));
 
 app.get('/api/health', (req, res) => {
-  res.json({ success: true, message: 'shoplet拌川 - 后端服务运行中' });
+  res.json({ success: true, message: 'shoplet - 后端服务运行中' });
 });
 
 app.listen(PORT, async () => {

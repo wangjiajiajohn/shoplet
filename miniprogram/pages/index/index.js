@@ -80,7 +80,7 @@ Page({
     wx.openLocation({
       latitude,
       longitude,
-      name: 'shoplet拌川',
+      name: 'shoplet',
       address: location + (locationSub ? ' · ' + locationSub : ''),
       scale: 16
     });
@@ -192,7 +192,7 @@ Page({
 
   onShareAppMessage() {
     return {
-      title: 'shoplet拌川',
+      title: 'shoplet',
       desc: '老板已经支好摊子，铁锅正热着 —— 现在过去，拌川管够。',
       path: '/pages/index/index'
     };
@@ -200,7 +200,7 @@ Page({
 
   onShareTimeline() {
     return {
-      title: 'shoplet拌川',
+      title: 'shoplet',
       query: '',
       imageUrl: ''
     };

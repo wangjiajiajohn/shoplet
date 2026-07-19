@@ -1,7 +1,7 @@
 {
   "name": "youdianwan-backend",
   "version": "1.0.0",
-  "description": "shoplet拌川 - 后端服务",
+  "description": "shoplet - 后端服务",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
