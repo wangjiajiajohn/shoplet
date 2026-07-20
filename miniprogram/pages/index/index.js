@@ -10,13 +10,15 @@ Page({
     statusBarHeight: 0,
     navBarHeight: 0,
     rightSafe: 0,
-    tapCount: 0,
+    
     loading: true,
     sidebarOpen: false,
     userInfo: {
       avatarUrl: '',
       nickName: ''
-    }
+    },
+    passwordModalVisible: false,
+    passwordInput: ''
   },
 
   onLoad() {
@@ -91,29 +93,6 @@ Page({
     });
   },
 
-  onTitleTap() {
-    const count = this.data.tapCount + 1;
-    this.setData({ tapCount: count });
-    
-    if (this.tapTimer) {
-      clearTimeout(this.tapTimer);
-    }
-    
-    if (count >= 5) {
-      this.setData({ tapCount: 0 });
-      wx.navigateTo({ url: '/pages/admin/admin' });
-      return;
-    }
-    
-    this.tapTimer = setTimeout(() => {
-      this.setData({ tapCount: 0 });
-    }, 3000);
-  },
-
-  goAdmin() {
-    wx.navigateTo({ url: '/pages/admin/admin' });
-  },
-
   goOrders() {
     this.closeSidebar();
     wx.navigateTo({ url: '/pages/orders/orders' });
@@ -173,12 +152,6 @@ Page({
     wx.setStorageSync('userInfo', userInfo);
   },
 
-  onUnload() {
-    if (this.tapTimer) {
-      clearTimeout(this.tapTimer);
-    }
-  },
-
   makePhoneCall() {
     const phone = this.data.info.phone;
     if (!phone) return;
@@ -209,5 +182,34 @@ Page({
       query: '',
       imageUrl: ''
     };
+  },
+
+  showPasswordModal() {
+    this.setData({ passwordModalVisible: true, passwordInput: '' });
+  },
+
+  hidePasswordModal() {
+    this.setData({ passwordModalVisible: false });
+  },
+
+  onPasswordInput(e) {
+    this.setData({ passwordInput: e.detail.value });
+  },
+
+  submitPassword() {
+    const password = this.data.passwordInput.trim();
+    if (!password) {
+      wx.showToast({ title: '请输入口令', icon: 'none' });
+      return;
+    }
+    
+    if (password === 'shoplet' || password === '888888') {
+      this.hidePasswordModal();
+      this.closeSidebar();
+      wx.navigateTo({ url: '/pages/admin/admin' });
+    } else {
+      wx.showToast({ title: '口令错误', icon: 'none' });
+      this.setData({ passwordInput: '' });
+    }
   }
 });
