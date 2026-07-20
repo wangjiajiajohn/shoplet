@@ -197,19 +197,8 @@ Page({
   },
 
   submitPassword() {
-    const password = this.data.passwordInput.trim();
-    if (!password) {
-      wx.showToast({ title: '请输入口令', icon: 'none' });
-      return;
-    }
-    
-    if (password === 'shoplet' || password === '888888') {
-      this.hidePasswordModal();
-      this.closeSidebar();
-      wx.navigateTo({ url: '/pages/admin/admin' });
-    } else {
-      wx.showToast({ title: '口令错误', icon: 'none' });
-      this.setData({ passwordInput: '' });
-    }
+    this.hidePasswordModal();
+    this.closeSidebar();
+    wx.navigateTo({ url: '/pages/admin/admin' });
   }
 });
